@@ -19,6 +19,12 @@ code {
     monospace;
 }
 
+.buttonGroup{
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
 
 
 

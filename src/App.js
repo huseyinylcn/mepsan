@@ -1,7 +1,7 @@
 import './App.css';
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import Sidebar from './components/SideBar';
+import Sidebar from './components/sideBar';
 
 import Dashboard from "./pages/Dashboard";
 import Archive from "./pages/Archive";
@@ -10,10 +10,10 @@ import KillApp from "./pages/KillApp";
 function App() {
   return (
     <div className="flex h-screen bg-slate-50">
-      {/* SOL TARAF */}
+      
       <Sidebar />
 
-      <main className="flex-1 md:pl-64">
+      <main className="flex-1 pt-16 md:pt-0 md:pl-64">
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
