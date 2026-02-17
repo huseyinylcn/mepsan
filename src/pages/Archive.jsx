@@ -86,7 +86,7 @@ export default function Archive() {
               {selectedItem?.name ?? "Content"}
             </div>
 
-            <div className="p-3">
+            <div className="max-h-[70vh] overflow-auto p-3">
               {!selectedItem ? (
                 <div className="text-sm text-slate-500">Select a file</div>
               ) : (
