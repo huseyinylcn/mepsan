@@ -51,13 +51,13 @@ export default function Archive() {
       )}
 
       {!loading && !error && (
-        <div className="mt-4 grid grid-cols-12 gap-4">
-          <div className="col-span-4 rounded-md border border-slate-200 bg-white">
+        <div className="mt-4 flex flex-col gap-4 md:flex-row">
+          <div className="w-full rounded-md border border-slate-200 bg-white md:w-4/12">
             <div className="border-b border-slate-200 px-3 py-2 text-sm font-semibold text-slate-800">
               Files
             </div>
 
-            <div className="max-h-[70vh] overflow-auto p-2">
+            <div className="h-[40vh] overflow-auto p-2 md:h-[70vh]">
               {items.length === 0 ? (
                 <div className="px-2 py-3 text-sm text-slate-500">No data</div>
               ) : (
@@ -81,12 +81,12 @@ export default function Archive() {
             </div>
           </div>
 
-          <div className="col-span-8 rounded-md border border-slate-200 bg-white">
+          <div className="w-full rounded-md border border-slate-200 bg-white md:w-8/12">
             <div className="border-b border-slate-200 px-3 py-2 text-sm font-semibold text-slate-800">
               {selectedItem?.name ?? "Content"}
             </div>
 
-            <div className="max-h-[70vh] overflow-auto p-3">
+            <div className="h-[40vh] overflow-auto p-3 md:h-[70vh]">
               {!selectedItem ? (
                 <div className="text-sm text-slate-500">Select a file</div>
               ) : (
