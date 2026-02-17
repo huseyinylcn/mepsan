@@ -13,7 +13,7 @@ function App() {
       {/* SOL TARAF */}
       <Sidebar />
 
-      <main className="flex-1 pl-64">
+      <main className="flex-1 md:pl-64">
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
