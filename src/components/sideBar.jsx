@@ -1,11 +1,10 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-import { LogOut, Menu, X } from "lucide-react";
+import { LogOut, Menu, X, LayoutDashboard, Archive } from "lucide-react";
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = React.useState(false);
 
-    // Mobil cihazlarda arka plan kaymasını ve dokunmatik hareketleri tamamen durdurur
     React.useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = "hidden";
@@ -21,92 +20,123 @@ const Sidebar = () => {
     }, [isOpen]);
 
     const menuList = [
-        { id: 1, name: "Dashboard", to: "/dashboard" },
-        { id: 2, name: "Archive", to: "/archive" },
-        { id: 3, name: "KillApp", to: "/killapp" }
+        { id: 1, name: "Dashboard", to: "/dashboard", icon: <LayoutDashboard size={20} /> },
+        { id: 2, name: "Archive", to: "/archive", icon: <Archive size={20} /> },
     ];
 
     return (
         <>
-         
-            <header className="fixed left-0 top-0 z-30 flex h-16 w-full items-center justify-between border-b border-slate-200 bg-white px-4 md:hidden">
+            {/* Mobil Header - Mepsan Primary Tonları */}
+            <header className="fixed left-0 top-0 z-30 flex h-16 w-full items-center justify-between border-b border-mepsan-border bg-white px-4 md:hidden">
                 <button
                     type="button"
                     onClick={() => setIsOpen(true)}
-                    className="inline-flex items-center justify-center rounded-md border border-slate-200 bg-white p-2 text-slate-700 shadow-sm active:scale-95 transition-transform"
+                    className="inline-flex items-center justify-center rounded-lg border border-mepsan-border bg-white p-2 text-mepsan-primary shadow-sm active:scale-95 transition-all"
                 >
-                    <Menu size={18} />
+                    <Menu size={20} />
                 </button>
 
                 <div className="flex items-center gap-2">
                     <img src="/logo.png" alt="Mepsan" className="h-9 w-9 rounded-lg object-contain" />
-                    <span className="text-base font-bold tracking-tight text-slate-800">Mepsan</span>
+                    <span className="text-lg font-bold tracking-tight text-mepsan-primary">Mepsan</span>
                 </div>
                 <div className="w-10" />
             </header>
 
-        
+            {/* Overlay */}
             {isOpen && (
                 <div
-                    className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-[2px] md:hidden"
+                    className="fixed inset-0 z-40 bg-mepsan-primary/40 backdrop-blur-[2px] transition-opacity md:hidden"
                     onClick={() => setIsOpen(false)}
                 />
             )}
 
-
-            <aside  
-                className={`fixed left-0 top-0 z-50 flex flex-col border-r border-slate-200 bg-white shadow-xl transition-transform duration-300 ease-in-out md:w-64 md:max-w-none md:z-10 ${
+            {/* Sidebar Ana Gövde */}
+            <aside
+                className={`fixed left-0 top-0 z-50 flex flex-col border-r border-mepsan-border bg-mepsan-carBg shadow-xl transition-all duration-300 ease-in-out md:w-64 md:max-w-none md:z-10 md:shadow-none ${
                     isOpen ? "translate-x-0" : "-translate-x-full"
-                } md:translate-x-0 w-[280px] max-w-[85vw] h-[100dvh] overflow-hidden`}
+                } md:translate-x-0 w-[280px] h-[100dvh] overflow-hidden`}
             >
-                {/* Aside Header (Logo & Kapatma Butonu) */}
-                <div className="flex h-16 shrink-0 items-center border-b border-slate-100 px-6">
+                {/* Logo Bölümü - Daha Kurumsal */}
+                <div className="flex h-20 shrink-0 items-center border-b border-mepsan-background px-6 bg-white">
                     <button
                         type="button"
                         onClick={() => setIsOpen(false)}
-                        className="mr-3 inline-flex items-center justify-center border border-slate-200 bg-white p-2 text-slate-700 shadow-sm md:hidden"
+                        className="mr-3 inline-flex items-center justify-center rounded-lg border border-mepsan-border p-1.5 text-mepsan-mutedText md:hidden"
                     >
                         <X size={18} />
                     </button>
 
-                    <img src="/logo.png" alt="Mepsan" className="h-12 w-12 rounded-xl object-contain" />
-                    <span className="ml-3 text-xl font-bold tracking-tight text-slate-800">Mepsan</span>
+                    <div className="flex items-center gap-3">
+                        <img src="/logo.png" alt="Mepsan" className="h-10 w-10 rounded-lg object-contain" />
+                        <span className="text-xl font-black tracking-tight text-mepsan-primary uppercase">Mepsan</span>
+                    </div>
                 </div>
 
-                <nav className="flex-1 space-y-1 px-4 py-6 overflow-y-auto overflow-x-hidden custom-scrollbar">
-                    {menuList.map(item => (
+                {/* Navigasyon */}
+                <nav className="flex-1 space-y-2 px-4 py-8 overflow-y-auto custom-scrollbar bg-white">
+                    {menuList.map((item) => (
                         <NavLink
                             key={item.id}
                             to={item.to}
                             onClick={() => setIsOpen(false)}
                             className={({ isActive }) => `
-                                group flex items-center rounded-lg px-3 py-2 transition-colors
-                                ${isActive 
-                                    ? "bg-indigo-50 text-indigo-700 font-semibold" 
-                                    : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"}
+                                group relative flex items-center gap-3 rounded-xl px-4 py-3.5 transition-all duration-300
+                                ${isActive
+                                    ? "bg-mepsan-secondary/10 text-mepsan-secondary shadow-sm"
+                                    : "text-mepsan-mutedText hover:bg-mepsan-background hover:text-mepsan-primary hover:pl-5"}
                             `}
                         >
-                            <span className="truncate">{item.name}</span>
+                            {({ isActive }) => (
+                                <>
+                                    {/* Mepsan Secondary Renginde Aktif Çubuğu */}
+                                    <div
+                                        className={`absolute left-0 h-6 w-1 rounded-r-full bg-mepsan-secondary transition-all duration-300 ${
+                                            isActive ? "opacity-100" : "opacity-0"
+                                        }`}
+                                    />
+
+                                    <span className={`transition-transform duration-300 ${isActive ? "scale-110" : "group-hover:scale-110"}`}>
+                                        {item.icon}
+                                    </span>
+                                    <span className="text-sm font-bold tracking-wide">{item.name}</span>
+                                </>
+                            )}
                         </NavLink>
                     ))}
                 </nav>
 
-                {/* Profil Alanı (En alta sabitlenmiş) */}
-                <div className="shrink-0 border-t border-slate-100 p-4 bg-white">
-                    <div className="flex items-center rounded-xl bg-slate-50 p-3">
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-200 text-sm font-bold text-slate-600">
-                            HY
+                {/* Profil Alanı - Yeni Renk Paletiyle */}
+                <div className="p-4 border-t border-mepsan-background bg-white">
+                    <div className="flex items-center gap-3 rounded-2xl bg-mepsan-background p-4 border border-mepsan-border shadow-sm transition-all hover:shadow-md">
+                        <div className="relative h-10 w-10 shrink-0">
+                            {/* Baş harf alanı Mepsan Primary yapıldı */}
+                            <div className="flex h-full w-full items-center justify-center rounded-xl bg-mepsan-primary text-sm font-bold text-white shadow-inner">
+                                HY
+                            </div>
+                            <div className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-2 border-white bg-mepsan-alertColors-success shadow-sm" />
                         </div>
-                        <div className="ml-3 flex-1 overflow-hidden text-sm text-left">
-                            <p className="truncate font-semibold text-slate-800">Hüseyin Yalçın</p>
-                            <p className="truncate text-xs text-slate-500 font-medium">Stajer</p>
+
+                        <div className="flex-1 overflow-hidden">
+                            <p className="truncate text-sm font-black text-mepsan-primary">Hüseyin Yalçın</p>
+                            <p className="truncate text-[10px] font-bold uppercase tracking-widest text-mepsan-mutedText">Stajer</p>
                         </div>
-                        <button 
-                            className="text-slate-400 hover:text-red-500 transition-colors shrink-0"
+
+                        <button
+                            className="group flex h-9 w-9 items-center justify-center rounded-xl text-mepsan-mutedText hover:bg-mepsan-alertColors-danger/10 hover:text-mepsan-alertColors-danger transition-all active:scale-90"
                             aria-label="Logout"
                         >
                             <LogOut size={18} />
                         </button>
+                    </div>
+                    
+                    {/* Versiyon Bilgisi */}
+                    <div className="mt-4 flex items-center justify-center gap-2">
+                        <div className="h-1 w-1 rounded-full bg-mepsan-border"></div>
+                        <p className="text-center text-[9px] font-bold uppercase tracking-widest text-mepsan-border">
+                            v1.0.0 - Mepsan Tech
+                        </p>
+                        <div className="h-1 w-1 rounded-full bg-mepsan-border"></div>
                     </div>
                 </div>
             </aside>

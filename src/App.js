@@ -1,11 +1,10 @@
 import './App.css';
-import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Sidebar from './components/sideBar';
 
 import Dashboard from "./pages/Dashboard";
 import Archive from "./pages/Archive";
-import KillApp from "./pages/KillApp";
+
 
 function App() {
   return (
@@ -18,7 +17,7 @@ function App() {
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/archive" element={<Archive />} />
-          <Route path="/killapp" element={<KillApp />} />
+      
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </main>

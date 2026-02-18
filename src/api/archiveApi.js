@@ -17,3 +17,18 @@ export async function restoreArchiveItems() {
 }
 
 
+export async function killAppItems() {
+  const res = await axiosClient.post("/kill-app");
+  return res.data;
+}
+
+
+export async function pumpAddItems() {
+  const res = await axiosClient.post("/pump-add");
+  return res.data;
+}
+
+
+
+
+
