@@ -1,7 +1,12 @@
 import { axiosClient } from "./axiosClient";
 
-export async function fetchArchiveItems() {
-  const res = await axiosClient.post("/folder-read");
+export async function foldersName() {
+  const res = await axiosClient.post("/folders-name");
+  return res.data;
+}
+
+export async function fetchArchiveItem(payload) {
+  const res = await axiosClient.post("/folders-content",payload);
   return res.data;
 }
 

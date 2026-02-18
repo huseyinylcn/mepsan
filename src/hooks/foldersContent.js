@@ -1,35 +1,35 @@
-import { fetchArchiveItems, archiveItems, restoreArchiveItems } from "../api/archiveApi";
+
+import { fetchArchiveItem, archiveItems, restoreArchiveItems } from "../api/archiveApi";
 import  { useState, useEffect } from "react";
 
 
-export function useArchive() {
+export function useFoldersContent(payload) {
   const [state, setState] = useState({
-    items: [],
-    loading: true,
+    items: {},
+    loading: false,
     error: null,
     processing:false
   });
 
-  useEffect(() => {
-    let isMounted = true;
+ 
 
-    async function load() {
+
+    async function load(payload) {
       try {
-        const data = await fetchArchiveItems();
-        if (!isMounted) return;
+        const data = await fetchArchiveItem({fileName:payload});
+        
         setState({
-          items: Array.isArray(data) ? data : [],
+          items: data,
           loading: false,
           error: null,
         });
       } catch (e) {
-        if (!isMounted) return;
+      
         setState(prev => ({ ...prev, loading: false, error: e }));
       }
     }
-    load();
-    return () => { isMounted = false; };
-  }, []);
+   
+
 
 
 
@@ -60,5 +60,5 @@ export function useArchive() {
 
 
 
-  return {...state, handleArchive,handleRestore};
+  return {...state, handleArchive,handleRestore,load};
 }
