@@ -44,7 +44,7 @@ export default function Archive() {
     onClick={() => setIsOpen(!isOpen)} 
     className="flex items-center justify-between gap-2 px-4 py-2 bg-white border border-slate-200 rounded-md text-sm font-medium text-slate-700 shadow-sm hover:border-indigo-300 hover:text-indigo-600 transition-all min-w-[110px]"
   >
-    <span>{items[selectedIndex]?.name || "Dosya Seç"}</span>
+    <span className="truncate" >{items[selectedIndex]?.name || "Dosya Seç"}</span>
    
     <svg className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
