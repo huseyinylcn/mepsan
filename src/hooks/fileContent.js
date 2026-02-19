@@ -32,7 +32,7 @@ export function useFoldersContent() {
 
 const handleBackup = async () => {
   try {
-    setState(true);
+    setState(prev => ({ ...prev, processing: true }));
     const response = await backup();
 
    
@@ -62,7 +62,7 @@ const handleBackup = async () => {
   } catch (err) {
     console.log("İndirme hatası:", err);
   } finally {
-    setState(false);
+    setState(prev => ({ ...prev, processing: false }));
   }
 };
 
@@ -74,7 +74,7 @@ const handleRestore = async (file) => {
   if (!file) return;
 
   try {
-    setState(true);
+    setState(prev => ({ ...prev, processing: true }));
 
     const formData = new FormData();
 
@@ -88,9 +88,8 @@ const handleRestore = async (file) => {
 
   } catch (err) {
     console.error("Geri yükleme hatası:", err);
-    alert("Dosya şifresi veya formatı hatalı!");
   } finally {
-    setState(false);
+    setState(prev => ({ ...prev, processing: false }));
   }
 };
 

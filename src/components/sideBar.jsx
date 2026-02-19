@@ -20,7 +20,6 @@ const Sidebar = () => {
 
     return (
         <>
-            {/* Mobil Header - Arka Plan Koyu, Logo Orijinal */}
                  <header className="fixed left-0 top-0 z-30 flex h-16 w-full items-center justify-between border-b border-slate-200 bg-white px-4 md:hidden">
                 <button
                     type="button"
@@ -45,7 +44,6 @@ const Sidebar = () => {
                 />
             )}
 
-            {/* Sidebar - Tamamen Koyu (Mepsan Primary) */}
             <aside
                 className={`fixed left-0 top-0 z-50 flex flex-col bg-mepsan-primary text-white shadow-2xl transition-all duration-300 ease-in-out md:w-64 md:z-10 ${
                     isOpen ? "translate-x-0" : "-translate-x-full"
@@ -66,7 +64,6 @@ const Sidebar = () => {
                     </button>
                 </div>
 
-                {/* Navigasyon - Koyu Zeminde Daha Belirgin */}
                 <nav className="flex-1 space-y-1.5 px-4 py-8 overflow-y-auto bg-mepsan-primary">
                     {menuList.map((item) => (
                         <NavLink
@@ -82,7 +79,6 @@ const Sidebar = () => {
                         >
                             {({ isActive }) => (
                                 <>
-                                    {/* Aktif Çizgi */}
                                     <div className={`absolute left-0 h-6 w-1 rounded-r-full bg-white transition-all ${isActive ? "opacity-100" : "opacity-0"}`} />
                                     
                                     <span className={`transition-transform duration-200 ${isActive ? "scale-110" : "group-hover:scale-110"}`}>
@@ -95,14 +91,12 @@ const Sidebar = () => {
                     ))}
                 </nav>
 
-                {/* Profil Alanı - Tamamen Koyu Stil */}
                 <div className="p-4 border-t border-white/5">
                     <div className="flex items-center gap-3 rounded-2xl bg-white/5 p-4 border border-white/5 hover:bg-white/10 transition-all">
                         <div className="relative h-10 w-10 shrink-0">
                             <div className="flex h-full w-full items-center justify-center rounded-xl bg-mepsan-secondary text-sm font-bold text-white">
                                 HY
                             </div>
-                            {/* Aktiflik ışığı - alertColors.success'ten geliyor */}
                             <div className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-2 border-mepsan-primary bg-[#2E7D32]" />
                         </div>
 
