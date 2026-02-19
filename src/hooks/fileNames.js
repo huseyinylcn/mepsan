@@ -1,4 +1,4 @@
-import { foldersName } from "../api/archiveApi";
+import { fileNames } from "../api/api";
 import { useState, useEffect } from "react";
 
 export function useFoldersName() {
@@ -10,7 +10,7 @@ export function useFoldersName() {
 
   const triggerFoldersName = () => {
     setLoading(true);
-    foldersName()
+    fileNames()
       .then(data => {
  
         setFoldersName(data)
