@@ -4,6 +4,9 @@ import Sidebar from './components/sideBar';
 
 import Dashboard from "./pages/Dashboard";
 import Archive from "./pages/Archive";
+import Pumps from './pages/Pumps'; 
+
+
 
 
 function App() {
@@ -17,6 +20,8 @@ function App() {
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/archive" element={<Archive />} />
+          <Route path="/pumps" element={<Pumps />} />
+
       
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>

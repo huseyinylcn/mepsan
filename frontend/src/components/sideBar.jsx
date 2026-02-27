@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-import { LogOut, Menu, X, LayoutDashboard, Archive } from "lucide-react";
+import { LogOut, Menu, X, LayoutDashboard, Archive,Fuel } from "lucide-react";
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = React.useState(false);
@@ -16,6 +16,8 @@ const Sidebar = () => {
     const menuList = [
         { id: 1, name: "Dashboard", to: "/dashboard", icon: <LayoutDashboard size={20} /> },
         { id: 2, name: "Archive", to: "/archive", icon: <Archive size={20} /> },
+        { id: 3, name: "Pumps", to: "/pumps", icon: <Fuel size={20} /> },
+
     ];
 
     return (

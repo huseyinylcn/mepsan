@@ -7,12 +7,16 @@ app.use(cors());
 
 
 
-const routers = require("./interfaces/http/routers")
+const FileService = require("./interfaces/http/FileService/routers")
+const pumpService = require("./interfaces/http/pump/routers")
 
 
 
 
-app.use("/api/",routers)
+
+app.use("/api/files",FileService)
+app.use("/api/pumps",pumpService)
+
 
 
 

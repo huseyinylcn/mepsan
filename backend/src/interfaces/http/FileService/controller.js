@@ -1,7 +1,7 @@
-const encryptorUseCase = require("./../../use-case/encryptor")
-const decryptUseCase = require("./../../use-case/decrypt")
-const fileNamesUseCase = require("../../use-case/fileNames")
-const fileContentsUseCase = require("../../use-case/fileContents")
+const encryptorUseCase = require("../../../use-case/FileService/encryptor")
+const decryptUseCase = require("../../../use-case/FileService/decrypt")
+const fileNamesUseCase = require("../../../use-case/FileService/fileNames")
+const fileContentsUseCase = require("../../../use-case/FileService/fileContents")
 
 
 
@@ -23,7 +23,6 @@ async function encryptor(req, res, next) {
 
 async function decrypt(req, res, next) {
     try {
-
         const result = await decryptUseCase(req.file.buffer, req.file.originalname);
         res.status(200).json(result)
     } catch (err) {

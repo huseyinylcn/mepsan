@@ -11,13 +11,13 @@
                 "ftype": 0,
                 "nozzleNo": 1,
                 "plate": "",
-                "ptype": 0,
+                "ptype": 2,
                 "tsn": 121,
                 "unitPrice": "9.70",
                 "volume": "2.12"
             },
             "status": {
-                "ecr": 1,
+                "ecr": 0,
                 "pump": 0,
                 "scu": 0
             }
@@ -25,10 +25,10 @@
         {
             "pumpNo": "2",
             "saleVariables": {
-                "amount": "122.59",
+                "amount": "123.59",
                 "atype": 0,
                 "datetime": "202602131407",
-                "fillingTypeTransferForStawiz": false,
+                "fillingTypeTransferForStawiz": true,
                 "fiscalNumber": "",
                 "ftype": 0,
                 "nozzleNo": 1,
@@ -40,7 +40,7 @@
             },
             "status": {
                 "ecr": 1,
-                "pump": 0,
+                "pump": 1,
                 "scu": 0
             }
         }
