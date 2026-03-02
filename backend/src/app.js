@@ -9,6 +9,8 @@ app.use(cors());
 
 const FileService = require("./interfaces/http/FileService/routers")
 const pumpService = require("./interfaces/http/pump/routers")
+const userService = require("./interfaces/http/user/routers")
+
 
 
 
@@ -16,6 +18,8 @@ const pumpService = require("./interfaces/http/pump/routers")
 
 app.use("/api/files",FileService)
 app.use("/api/pumps",pumpService)
+app.use("/api/user",userService)
+
 
 
 

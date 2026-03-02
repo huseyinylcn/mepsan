@@ -7,8 +7,74 @@
                 "atype": 0,
                 "datetime": "202602041053",
                 "fillingTypeTransferForStawiz": false,
-                "fiscalNumber": "",
+                "fiscalNumber": "45DM440",
+                "ftype": 1,
+                "nozzleNo": 1,
+                "plate": "",
+                "ptype": 
+                2,
+                "tsn": 121,
+                "unitPrice": "9.70",
+                "volume": "2.12"
+            },
+            "status": {
+                "ecr": 0,
+                "pump": 0,
+                "scu": 0
+            }
+        },
+        {
+            "pumpNo": "1",
+            "saleVariables": {
+                "amount": "123.59",
+                "atype": 0,
+                "datetime": "202602131407",
+                "fillingTypeTransferForStawiz": true,
+                "fiscalNumber": "70BB362",
                 "ftype": 0,
+                "nozzleNo": 2,
+                "plate": "",
+                "ptype": 0,
+                "tsn": 54,
+                "unitPrice": "13.00",
+                "volume": "9.43"
+            },
+            "status": {
+                "ecr": 1,
+                "pump": 1,
+                "scu": 0
+            }
+        },
+        {
+            "pumpNo": "3",
+            "saleVariables": {
+                "amount": "123.59",
+                "atype": 0,
+                "datetime": "202602131407",
+                "fillingTypeTransferForStawiz": false,
+                "fiscalNumber": "22HL742",
+                "ftype": 2,
+                "nozzleNo": 1,
+                "plate": "",
+                "ptype": 0,
+                "tsn": 54,
+                "unitPrice": "13.00",
+                "volume": "9.43"
+            },
+            "status": {
+                "ecr": 0,
+                "pump": 2,
+                "scu": 0
+            }
+        },        {
+            "pumpNo": "1",
+            "saleVariables": {
+                "amount": "20.56",
+                "atype": 0,
+                "datetime": "202602041053",
+                "fillingTypeTransferForStawiz": false,
+                "fiscalNumber": "45DM440",
+                "ftype": 1,
                 "nozzleNo": 1,
                 "plate": "",
                 "ptype": 2,
@@ -23,15 +89,15 @@
             }
         },
         {
-            "pumpNo": "2",
+            "pumpNo": "1",
             "saleVariables": {
                 "amount": "123.59",
                 "atype": 0,
                 "datetime": "202602131407",
                 "fillingTypeTransferForStawiz": true,
-                "fiscalNumber": "",
+                "fiscalNumber": "70BB362",
                 "ftype": 0,
-                "nozzleNo": 1,
+                "nozzleNo": 2,
                 "plate": "",
                 "ptype": 0,
                 "tsn": 54,
@@ -41,6 +107,93 @@
             "status": {
                 "ecr": 1,
                 "pump": 1,
+                "scu": 0
+            }
+        },
+        {
+            "pumpNo": "3",
+            "saleVariables": {
+                "amount": "123.59",
+                "atype": 0,
+                "datetime": "202602131407",
+                "fillingTypeTransferForStawiz": false,
+                "fiscalNumber": "22HL742",
+                "ftype": 2,
+                "nozzleNo": 1,
+                "plate": "",
+                "ptype": 0,
+                "tsn": 54,
+                "unitPrice": "13.00",
+                "volume": "9.43"
+            },
+            "status": {
+                "ecr": 0,
+                "pump": 2,
+                "scu": 0
+            }
+        },        {
+            "pumpNo": "1",
+            "saleVariables": {
+                "amount": "20.56",
+                "atype": 0,
+                "datetime": "202602041053",
+                "fillingTypeTransferForStawiz": false,
+                "fiscalNumber": "45DM440",
+                "ftype": 1,
+                "nozzleNo": 1,
+                "plate": "",
+                "ptype": 2,
+                "tsn": 121,
+                "unitPrice": "9.70",
+                "volume": "2.12"
+            },
+            "status": {
+                "ecr": 0,
+                "pump": 0,
+                "scu": 0
+            }
+        },
+        {
+            "pumpNo": "1",
+            "saleVariables": {
+                "amount": "123.59",
+                "atype": 0,
+                "datetime": "202602131407",
+                "fillingTypeTransferForStawiz": true,
+                "fiscalNumber": "70BB362",
+                "ftype": 0,
+                "nozzleNo": 2,
+                "plate": "",
+                "ptype": 0,
+                "tsn": 54,
+                "unitPrice": "13.00",
+                "volume": "9.43"
+            },
+            "status": {
+                "ecr": 1,
+                "pump": 1,
+                "scu": 0
+            }
+        },
+        {
+            "pumpNo": "3",
+            "saleVariables": {
+                "amount": "123.59",
+                "atype": 0,
+                "datetime": "202602131407",
+                "fillingTypeTransferForStawiz": false,
+                "fiscalNumber": "22HL742",
+                "ftype": 2,
+                "nozzleNo": 1,
+                "plate": "",
+                "ptype": 0,
+                "tsn": 54,
+                "unitPrice": "13.00",
+                "volume": "9.43"
+            },
+            "status": {
+                "ecr": 0,
+                "pump": 2,
                 "scu": 0
             }
         }

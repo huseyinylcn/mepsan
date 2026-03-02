@@ -1,21 +1,26 @@
-const sqlite3 = require("sqlite3")
+const sqlite3 = require("sqlite3");
 const dotenv = require("dotenv").config();
-const databasePath = process.env.DB_SQLITE_CONNECTION_STRING.toString();
 
-function createConnection() {
+let dbInstance = null;
+
+async function getDbConnection() {
+  if (dbInstance) return dbInstance; 
+
   return new Promise((resolve, reject) => {
     const db = new sqlite3.Database(
-      databasePath,
+      process.env.DB_SQLITE_CONNECTION_STRING,
       sqlite3.OPEN_READWRITE,
       (err) => {
-        if (err) reject(err);
-        else resolve(db);
-      },
+        if (err) {
+          reject(err);
+        } else {
+          dbInstance = db; 
+          resolve(db);
+        }
+      }
     );
   });
 }
 
 
-
-
-module.exports = createConnection
+module.exports = { getDbConnection };
