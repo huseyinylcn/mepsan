@@ -37,6 +37,13 @@ export async function pumpsGet() {
 
 
 
+export async function login(payload) {
+  const res = await axiosClient.post("/user/v1/post/login",payload);
+  return res.data
+}
+
+
+
 
 
 

@@ -12,7 +12,7 @@ export function usePumps() {
 
         pumpsGet()
             .then(data => {
-                console.log(data.data.pumps)
+        
                 setPumps(data.data.pumps)
 
             })

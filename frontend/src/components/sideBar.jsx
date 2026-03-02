@@ -1,9 +1,23 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
 import { LogOut, Menu, X, LayoutDashboard, Archive,Fuel } from "lucide-react";
+import { useAuth } from '../context/AuthContext';
+
+
+
+
+
 
 const Sidebar = () => {
+    const userType = localStorage.getItem("Type");
+    const userName = localStorage.getItem("Name");
+    const userSurname = localStorage.getItem("Surname");
+
+    
+    const roleMap = { "0": "Stajyer", "1": "Admin", "2": "Üye" };
+
     const [isOpen, setIsOpen] = React.useState(false);
+    const { logout } = useAuth()
 
     React.useEffect(() => {
         if (isOpen) {
@@ -14,11 +28,17 @@ const Sidebar = () => {
     }, [isOpen]);
 
     const menuList = [
-        { id: 1, name: "Dashboard", to: "/dashboard", icon: <LayoutDashboard size={20} /> },
-        { id: 2, name: "Archive", to: "/archive", icon: <Archive size={20} /> },
-        { id: 3, name: "Pumps", to: "/pumps", icon: <Fuel size={20} /> },
-
+        { id: 1, name: "Dashboard", to: "/dashboard", icon: <LayoutDashboard size={20} /> , roles:["0","1","2"]},
+        { id: 2, name: "Archive", to: "/archive", icon: <Archive size={20} />,roles:["0","1","2"] },
+        { id: 3, name: "Pumps", to: "/pumps", icon: <Fuel size={20} />,roles:["1","2"] },
     ];
+
+
+
+const filteredMenu = menuList.filter(item => item.roles.includes(userType));
+
+
+
 
     return (
         <>
@@ -67,7 +87,7 @@ const Sidebar = () => {
                 </div>
 
                 <nav className="flex-1 space-y-1.5 px-4 py-8 overflow-y-auto bg-mepsan-primary">
-                    {menuList.map((item) => (
+                    {filteredMenu.map((item) => (
                         <NavLink
                             key={item.id}
                             to={item.to}
@@ -97,17 +117,20 @@ const Sidebar = () => {
                     <div className="flex items-center gap-3 rounded-2xl bg-white/5 p-4 border border-white/5 hover:bg-white/10 transition-all">
                         <div className="relative h-10 w-10 shrink-0">
                             <div className="flex h-full w-full items-center justify-center rounded-xl bg-mepsan-secondary text-sm font-bold text-white">
-                                HY
+                               {userName[0]}{userSurname[0]}
                             </div>
                             <div className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-2 border-mepsan-primary bg-[#2E7D32]" />
                         </div>
 
                         <div className="flex-1 overflow-hidden">
-                            <p className="truncate text-sm font-bold text-white">Hüseyin Yalçın</p>
-                            <p className="truncate text-[10px] font-bold uppercase tracking-widest text-slate-500">Stajer</p>
+                            <p className="truncate text-sm font-bold text-white">{userName} {userSurname}</p>
+                            <p className="truncate text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                                {roleMap[userType]}
+
+                            </p>
                         </div>
 
-                        <button className="text-slate-500 hover:text-red-400 transition-colors">
+                        <button onClick={logout} className="text-slate-500 hover:text-red-400 transition-colors">
                             <LogOut size={18} />
                         </button>
                     </div>
