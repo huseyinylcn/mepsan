@@ -5,7 +5,7 @@ const app = express()
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }))
 app.use(cors({
-  origin: 'http://localhost:3000', 
+  origin: 'https://34e5-78-188-72-174.ngrok-free.app/', 
   credentials: true 
 }));
 app.use(cookieParser()); 
