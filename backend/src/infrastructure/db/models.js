@@ -76,7 +76,7 @@ let models = {
     async signup(data) {
         const _db = await getDbConnection();
 
-            data.Password = await bcrypt.hash(data.Password, 10);
+        data.Password = await bcrypt.hash(data.Password, 10);
         const sql = `INSERT INTO Users (Name, Surname, Password, Language, Type, Phone) VALUES (?, ?, ?, ?, ?, ?)`;
         const params = [data.Name, data.Surname, data.Password, data.Language, data.Type, data.Phone];
 
@@ -96,17 +96,15 @@ let models = {
 
     async login(data) {
         const db = await getDbConnection();
-        const sql = "SELECT * FROM Users WHERE Name = ?";
+        const sql = "SELECT ID,Password FROM Users WHERE Name = ?";
 
         return new Promise((resolve, reject) => {
 
             db.get(sql, [data.Name], async (err, user) => {
                 if (err) return reject("Veritabanı hatası");
 
-                // BURAYA return EKLİYORUZ
                 if (!user) return reject("Kullanıcı veya şifre hatalı");
 
-                // Artık kod buraya sadece user varsa gelir
                 const isMatch = await bcrypt.compare(data.Password, user.Password);
 
                 if (isMatch) {
@@ -117,7 +115,102 @@ let models = {
                 }
             });
         });
-    }
+    },
+
+    async usersGetAll(data) {
+        const db = await getDbConnection();
+        const sql = "SELECT * FROM Users";
+
+        return new Promise((resolve, reject) => {
+
+            db.all(sql, (err, users) => {
+                if (err) return reject("Veritabanı hatası");
+
+                const sanitizedUsers = users.map(user => {
+                    const { Password, ...userWithoutPassword } = user;
+                    return userWithoutPassword;
+                });
+
+                resolve(sanitizedUsers);
+            });
+        });
+    },
+
+
+
+    async userUpdate(data) {
+        const db = await getDbConnection();
+
+        const sql = "UPDATE Users SET Name = ?, Surname = ?, Language = ?, Type = ?, Phone = ? WHERE ID = ?";
+        const params = [data.Name, data.Surname, data.Language, data.Type, data.Phone, data.ID];
+
+        return new Promise((resolve, reject) => {
+
+            db.run(sql, params, function (err) {
+                if (err) {
+                    console.error(err);
+                    return reject("Güncelleme sırasında bir hata oluştu.");
+                }
+
+
+                if (this.changes === 0) {
+                    return reject("Kullanıcı bulunamadı.");
+                }
+
+                resolve({ success: true, message: "Kullanıcı başarıyla güncellendi." });
+            });
+        });
+    },
+
+
+
+
+
+
+    async userDelete(data) {
+        const db = await getDbConnection();
+        const sql = "delete from Users WHERE ID = ?";
+        const params = [data.ID];
+
+        return new Promise((resolve, reject) => {
+
+            db.run(sql, params, function (err) {
+                if (err) {
+                    console.error(err);
+                    return reject("Güncelleme sırasında bir hata oluştu.");
+                }
+
+
+                if (this.changes === 0) {
+                    return reject("Kullanıcı bulunamadı.");
+                }
+
+                resolve({ success: true, message: "Kullanıcı başarıyla Silindi." });
+            });
+        });
+    },
+
+    async me(data) {
+        const db = await getDbConnection();
+        const sql = "SELECT * FROM Users where ID = ?";
+        const params = [data.ID];
+
+        return new Promise((resolve, reject) => {
+
+            db.all(sql, params, (err, users) => {
+                if (err) return reject("Veritabanı hatası");
+                try {
+                    delete users[0].Password;
+
+                    resolve(users[0]);
+                } catch (error) {
+                    return reject("Kullanıcı yok");
+                }
+
+
+            });
+        });
+    },
 
 }
 

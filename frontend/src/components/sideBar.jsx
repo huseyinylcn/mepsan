@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-import { LogOut, Menu, X, LayoutDashboard, Archive,Fuel } from "lucide-react";
+import { LogOut, Menu, X, LayoutDashboard, Archive,Fuel,UserCog } from "lucide-react";
 import { useAuth } from '../context/AuthContext';
 
 
@@ -8,16 +8,21 @@ import { useAuth } from '../context/AuthContext';
 
 
 
+
+
+
 const Sidebar = () => {
-    const userType = localStorage.getItem("Type");
-    const userName = localStorage.getItem("Name");
-    const userSurname = localStorage.getItem("Surname");
+  
+  const { user, loading,logout } = useAuth();
+    const userType = String(user.Type)
+    const userName = user.Name
+    const userSurname = user.Surname
 
     
     const roleMap = { "0": "Stajyer", "1": "Admin", "2": "Üye" };
 
     const [isOpen, setIsOpen] = React.useState(false);
-    const { logout } = useAuth()
+ 
 
     React.useEffect(() => {
         if (isOpen) {
@@ -30,8 +35,11 @@ const Sidebar = () => {
     const menuList = [
         { id: 1, name: "Dashboard", to: "/dashboard", icon: <LayoutDashboard size={20} /> , roles:["0","1","2"]},
         { id: 2, name: "Archive", to: "/archive", icon: <Archive size={20} />,roles:["0","1","2"] },
-        { id: 3, name: "Pumps", to: "/pumps", icon: <Fuel size={20} />,roles:["1","2"] },
+        { id: 3, name: "Pumps", to: "/pumps", icon: <Fuel size={20} />,roles:["0","1","2"] },
+        { id: 4, name: "Admin Dashboard", to: "/admin-dashboard", icon: <UserCog size={20} />,roles:["1"] },
+
     ];
+    
 
 
 

@@ -25,7 +25,7 @@ export function usePumps() {
 
        const interval = setInterval(() => {
             triggerPumps();
-        }, 1000);
+        }, 500);
 
         return () => clearInterval(interval);
     }, []);

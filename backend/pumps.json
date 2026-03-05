@@ -9,7 +9,7 @@
                 "fillingTypeTransferForStawiz": false,
                 "fiscalNumber": "45DM440",
                 "ftype": 1,
-                "nozzleNo": 1,
+                "nozzleNo": 2,
                 "plate": "",
                 "ptype": 
                 2,
@@ -172,28 +172,6 @@
             "status": {
                 "ecr": 1,
                 "pump": 1,
-                "scu": 0
-            }
-        },
-        {
-            "pumpNo": "3",
-            "saleVariables": {
-                "amount": "123.59",
-                "atype": 0,
-                "datetime": "202602131407",
-                "fillingTypeTransferForStawiz": false,
-                "fiscalNumber": "22HL742",
-                "ftype": 2,
-                "nozzleNo": 1,
-                "plate": "",
-                "ptype": 0,
-                "tsn": 54,
-                "unitPrice": "13.00",
-                "volume": "9.43"
-            },
-            "status": {
-                "ecr": 0,
-                "pump": 2,
                 "scu": 0
             }
         }

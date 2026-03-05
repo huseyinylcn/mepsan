@@ -1,13 +1,15 @@
-// components/RoleBasedRoute.jsx
+
 import { Navigate, Outlet } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+
 
 export const RoleBasedRoute = ({ allowedRoles }) => {
-  const userType = localStorage.getItem("Type");
+    const { user, loading,logout } = useAuth();
+  const userType =String(user.Type)
 
   if (!allowedRoles.includes(userType)) {
     return <Navigate to="/dashboard" replace />;
   }
 
-  // Eğer yetkisi varsa, alt rotaları (Outlet) render et
   return <Outlet />;
 };

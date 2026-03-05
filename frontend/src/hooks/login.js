@@ -11,12 +11,6 @@ export function useLogin() {
     setError(null);
     try {
       const res = await login(data);
-      localStorage.setItem("token", res.result.token);
-      localStorage.setItem("Name", res.result.Name);
-      localStorage.setItem("Surname", res.result.Surname);
-      localStorage.setItem("Language", res.result.Language);
-      localStorage.setItem("Type", res.result.Type);
-      localStorage.setItem("Phone", res.result.Phone);
 
 
 

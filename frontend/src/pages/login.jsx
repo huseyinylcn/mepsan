@@ -8,7 +8,7 @@ export default function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { login } = useAuth();
+    const { checkAuth } = useAuth();
 
 
     const navigate = useNavigate();
@@ -22,13 +22,13 @@ export default function Login() {
 
             const res = await handleLogin({ "Name": email, "Password": password });
 
-            if (res){
-              login(res.result.token)
+            if (res) {
+                await checkAuth()
                 navigate("/dashboard");
             }
 
         } catch (error) {
-            console.log("rttrtr ",error)
+            console.log("rttrtr ", error)
         }
 
     };

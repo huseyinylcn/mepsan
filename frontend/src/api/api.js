@@ -43,6 +43,44 @@ export async function login(payload) {
 }
 
 
+export async function usersAPI() {
+  const res = await axiosClient.get("/user/v1/get/all");
+  return res.data
+}
+
+
+
+export async function userUpdate(payload) {
+  const res = await axiosClient.post("/user/v1/update",payload);
+  return res.data
+}
+
+
+export async function userDelete(payload) {
+  const res = await axiosClient.delete("/user/v1/delete",{data:payload});
+  return res.data
+}
+
+
+export async function userAdd(payload) {
+  const res = await axiosClient.post("/user/v1/post/signup",payload);
+  return res.data
+}
+
+export async function meApi() {
+  const res = await axiosClient.post("/user/v1/me");
+  return res.data
+}
+
+
+export async function logoutApi() {
+  const res = await axiosClient.post("/user/v1/logout");
+  return res.data
+}
+
+
+
+
 
 
 

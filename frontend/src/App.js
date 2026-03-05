@@ -9,6 +9,8 @@ import { RoleBasedRoute } from "./components/RoleBasedRoute";
 import Archive from "./pages/Archive";
 import Pumps from './pages/Pumps';
 import Login from './pages/login';
+import AdminDashboard from './pages/AdminDashboard';
+
 
 function App() {
   return (
@@ -22,10 +24,16 @@ function App() {
       }>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/archive" element={<Archive />} />
+        <Route path="/pumps" element={<Pumps />} />
 
-        <Route element={<RoleBasedRoute allowedRoles={['1',"2"]} />}>
-          <Route path="/pumps" element={<Pumps />} />
+
+
+
+        <Route element={<RoleBasedRoute allowedRoles={['1']} />}>
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
         </Route>
+
+
 
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
       </Route>

@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require("dotenv").config();
+
 const SECRET_KEY = process.env.JWT_SECRET;
 
 function generateToken(payload) {
@@ -9,9 +10,11 @@ function generateToken(payload) {
 
 
 
+
+
+
 function authenticateToken(req, res, next) {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  const token = req.cookies.token; 
 
   if (!token) {
     return res.status(401).json({ message: 'Token bulunamadı', code: "0x401" });
