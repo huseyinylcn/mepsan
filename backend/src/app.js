@@ -4,10 +4,34 @@ const cookieParser = require('cookie-parser');
 const app = express()
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }))
+
+
+const allowedOrigins = [
+  'http://localhost:3000', 
+  'https://vzmsr-78-188-72-174.a.free.pinggy.link' 
+];
+
 app.use(cors({
-  origin: 'https://34e5-78-188-72-174.ngrok-free.app/', 
-  credentials: true 
+  origin: function (origin, callback) {
+    
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS Policy: Bu origin engellendi.'));
+    }
+  },
+  credentials: true, 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
 }));
+
+
+
+
+
+
+
+
 app.use(cookieParser()); 
 
 

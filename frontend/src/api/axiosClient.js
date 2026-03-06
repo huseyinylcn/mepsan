@@ -2,8 +2,8 @@ import axios from "axios";
 
 
 export const axiosClient = axios.create({
-  baseURL: "http://localhost:3001/api/",
-  timeout: 15000,
+  baseURL: "https://df91-78-188-72-174.ngrok-free.app/api/",
+  timeout: 55000,
   headers: {
     "Content-Type": "application/json",
   },
