@@ -3,23 +3,73 @@
         {
             "pumpNo": "1",
             "saleVariables": {
-                "amount": "20.56",
+                
                 "atype": 0,
                 "datetime": "202602041053",
                 "fillingTypeTransferForStawiz": false,
                 "fiscalNumber": "45DM440",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                "amount": "    502.56     ",
                 "ftype": 1,
+                "ptype": 1,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 "nozzleNo": 2,
                 "plate": "",
-                "ptype": 
-                2,
+              
                 "tsn": 121,
                 "unitPrice": "9.70",
                 "volume": "2.12"
             },
             "status": {
                 "ecr": 0,
-                "pump": 0,
+                "pump": 1,
                 "scu": 0
             }
         },

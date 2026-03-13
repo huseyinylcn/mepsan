@@ -2,7 +2,6 @@
 import './App.css';
 import { Navigate, Route, Routes } from "react-router-dom";
 import DashboardLayout from './components/DashboardLayout';
-import Dashboard from "./pages/Dashboard";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { RoleBasedRoute } from "./components/RoleBasedRoute";
 
@@ -22,7 +21,7 @@ function App() {
           <DashboardLayout />
         </ProtectedRoute>
       }>
-        <Route path="/dashboard" element={<Dashboard />} />
+      
         <Route path="/archive" element={<Archive />} />
         <Route path="/pumps" element={<Pumps />} />
 
@@ -35,10 +34,10 @@ function App() {
 
 
 
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/" element={<Navigate to="/pumps" replace />} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<Navigate to="/pumps" replace />} />
     </Routes>
   );
 }

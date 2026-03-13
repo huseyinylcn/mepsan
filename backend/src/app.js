@@ -8,7 +8,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }))
 
 const allowedOrigins = [
   'http://localhost:3000', 
-  'https://vzmsr-78-188-72-174.a.free.pinggy.link' 
+  'https://49f3-78-188-72-174.ngrok-free.app' 
 ];
 
 app.use(cors({
@@ -38,6 +38,8 @@ app.use(cookieParser());
 const FileService = require("./interfaces/http/FileService/routers")
 const pumpService = require("./interfaces/http/pump/routers")
 const userService = require("./interfaces/http/user/routers")
+const dbService = require("./interfaces/http/db_process/routers")
+
 
 
 
@@ -47,6 +49,8 @@ const userService = require("./interfaces/http/user/routers")
 app.use("/api/files",FileService)
 app.use("/api/pumps",pumpService)
 app.use("/api/user",userService)
+app.use("/api/db",dbService)
+
 
 
 
