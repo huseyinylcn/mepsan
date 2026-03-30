@@ -1,10 +1,10 @@
-import { tablesName, tableContent,tableUpdate } from "../api/api";
+import { tablesName, tableContent, tableUpdate } from "../api/api";
 import { useState, useEffect } from "react";
 
-export function useTablesName() {
+export function useTables() {
   const [TablesNames, setTablesName] = useState([]);
   const [TableContent, setTableContent] = useState(null);
-  
+
 
 
   const [loading, setLoading] = useState(false);
@@ -13,48 +13,46 @@ export function useTablesName() {
 
 
   const triggerTablesName = () => {
-    setLoading(true); 
+    setLoading(true);
     tablesName()
       .then(data => {
         setTablesName(data.result);
       })
       .catch((err) => console.error(err))
-      .finally(() => setLoading(false)); 
+      .finally(() => setLoading(false));
   };
 
+
   const triggerTableContent = (tableName) => {
-    setLoading2(true); 
+    setLoading2(true);
     tableContent(tableName)
       .then(data => {
         setTableContent(data.result);
         console.log(data.result);
       })
       .catch((err) => console.error(err))
-      .finally(() => setLoading2(false)); 
+      .finally(() => setLoading2(false));
   };
 
 
-    const triggerTableUpdate = (column) => {
-    setLoading3(true); 
+  const triggerTableUpdate = (column) => {
+    setLoading3(true);
     tableUpdate(column)
       .then(data => {
         console.log(data.result);
       })
       .catch((err) => console.error(err))
-      .finally(() => setLoading3(false)); 
+      .finally(() => setLoading3(false));
   };
 
-  useEffect(() => {
-    triggerTablesName();
-  }, []);
 
-  return { 
-    TablesNames, 
-    triggerTablesName, 
-    loading, 
-    TableContent, 
-    triggerTableContent, 
-    loading2 ,
+  return {
+    TablesNames,
+    triggerTablesName,
+    loading,
+    TableContent,
+    triggerTableContent,
+    loading2,
     triggerTableUpdate,
     loading3
   };
