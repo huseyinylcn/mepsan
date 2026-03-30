@@ -80,6 +80,22 @@ export async function logoutApi() {
 
 
 
+export async function tablesName() {
+  const res = await axiosClient.post("/db/v1/get/dynamic",{tableName:"sqlite_sequence"});
+  return res.data
+}
+
+
+export async function tableContent(payload) {
+  const res = await axiosClient.post("/db/v1/get/dynamic",payload);
+  return res.data
+}
+
+export async function tableUpdate(payload) {
+  const res = await axiosClient.post("/db/v1/update/dynamic",payload);
+  return res.data
+}
+
 
 
 

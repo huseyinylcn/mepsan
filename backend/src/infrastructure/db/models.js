@@ -73,6 +73,76 @@ let models = {
     },
 
 
+
+    async dynamicGetModel(data) {
+        const db = await getDbConnection();
+        const sql = `SELECT  rowid AS rowid_key, * FROM ${data.tableName} `;
+
+        return new Promise((resolve, reject) => {
+
+            db.all(sql, (err, users) => {
+                if (err) return reject("Veritabanı hatası");
+                try {
+                    resolve(users);
+                } catch (error) {
+                    return reject("Kullanıcı yok");
+                }
+
+
+            });
+        });
+    },
+
+
+
+
+async dynamicUpdateModel(data) {
+    const db = await getDbConnection();
+
+    // 1. Tablo ismini temizle (SQL Injection önlemi)
+    const safeTableName = data.tableName.replace(/[^a-zA-Z0-9_]/g, '');
+
+    // 2. Güncellenecek alanları (content) ve rowid_key'i ayır
+    const { rowid_key, ...updateFields } = data.content;
+
+    if (!rowid_key) {
+        return Promise.reject("Güncelleme için rowid_key gereklidir.");
+    }
+
+    // 3. Dinamik SET bloğunu oluştur
+    // Örn: "column1 = ?, column2 = ?"
+    const columns = Object.keys(updateFields);
+    const setClause = columns.map(col => `${col} = ?`).join(', ');
+
+    // 4. Parametre dizisini oluştur (Values + RowID)
+    // Önce güncellenecek değerler, en sona WHERE için rowid_key
+    const params = [...Object.values(updateFields), rowid_key];
+
+    // Final Sorgu: UPDATE tablo SET col1=?, col2=? WHERE rowid = ?
+    const sql = `UPDATE ${safeTableName} SET ${setClause} WHERE rowid = ?`;
+
+    return new Promise((resolve, reject) => {
+        db.run(sql, params, function (err) {
+            if (err) {
+                console.error("SQL Hatası:", err);
+                return reject("Update Error: " + err.message);
+            }
+
+            if (this.changes === 0) {
+                return reject("Güncellenecek satır bulunamadı veya veri aynı.");
+            }
+
+            resolve({ 
+                success: true, 
+                message: "Update Success", 
+                changes: this.changes 
+            });
+        });
+    });
+},
+
+
+
     async signup(data) {
         const _db = await getDbConnection();
 
@@ -208,243 +278,9 @@ let models = {
         });
     },
 
-    async automationConfigGet(data) {
-        const db = await getDbConnection();
-        const sql = "SELECT * FROM AutomationConfig ";
 
-        return new Promise((resolve, reject) => {
 
-            db.all(sql, (err, users) => {
-                if (err) return reject("Veritabanı hatası");
-                try {
-                    resolve(users);
-                } catch (error) {
-                    return reject("Kullanıcı yok");
-                }
 
-
-            });
-        });
-    },
-    async automationProtocolsGet(params) {
-        const db = await getDbConnection();
-        const sql = "SELECT * FROM AutomationProtocols";
-
-        return new Promise((resolve, reject) => {
-
-            db.all(sql, (err, users) => {
-                if (err) return reject("Veritabanı hatası");
-                try {
-                    resolve(users);
-                } catch (error) {
-                    return reject("Kullanıcı yok");
-                }
-
-
-            });
-        });
-    },
-
-
-    async automationConfigUpdate(data) {
-        const db = await getDbConnection();
-
-        const sql = "UPDATE AutomationConfig SET DeviceID = ?, SCPNo = ?, Protocol = ?, Timeout = ?, Address = ?,  ErrorCycle = ?   WHERE ID = ?";
-
-        const params = [data.DeviceID, data.SCPNo, data.Protocol, data.Timeout, data.Address, data.ErrorCycle, data.ID];
-
-        return new Promise((resolve, reject) => {
-
-            db.run(sql, params, function (err) {
-                if (err) {
-                    console.error(err);
-                    return reject("Update Error");
-                }
-
-                if (this.changes === 0) {
-                    return reject("error.");
-                }
-                resolve({ success: true, message: "Update Success" });
-            });
-        });
-    },
-
-
-
-
-    async automationProtocolsUpdate(data) {
-        const db = await getDbConnection();
-
-        const sql = "UPDATE AutomationProtocols SET Protocol = ?, Name = ?  WHERE ID = ?";
-
-        const params = [data.Protocol, data.Name, data.ID];
-
-        return new Promise((resolve, reject) => {
-
-            db.run(sql, params, function (err) {
-                if (err) {
-                    console.error(err);
-                    return reject("Update Error");
-                }
-
-                if (this.changes === 0) {
-                    return reject("error.");
-                }
-                resolve({ success: true, message: "Update Success" });
-            });
-        });
-    },
-
-    async countryTypeDefGet(params) {
-
-        const db = await getDbConnection();
-        const sql = "SELECT * FROM CountryTypedef";
-
-        return new Promise((resolve, reject) => {
-
-            db.all(sql, (err, users) => {
-                if (err) return reject("Veritabanı hatası");
-                try {
-                    resolve(users);
-                } catch (error) {
-                    return reject("veri yok");
-                }
-
-
-            });
-        });
-
-    },
-
-    async countryTypeDefUpdate(data) {
-        const db = await getDbConnection();
-
-        const sql = "UPDATE CountryTypedef SET No = ?, Name = ?  WHERE ID = ?";
-
-        const params = [data.No, data.Name, data.ID];
-
-        return new Promise((resolve, reject) => {
-
-            db.run(sql, params, function (err) {
-                if (err) {
-                    console.error(err);
-                    return reject("Update Error");
-                }
-
-                if (this.changes === 0) {
-                    return reject("error.");
-                }
-                resolve({ success: true, message: "Update Success" });
-            });
-        });
-    },
-
-
-    async dispenserConfigGet() {
-
-        const db = await getDbConnection();
-        const sql = "SELECT * FROM DispenserConfig";
-
-        return new Promise((resolve, reject) => {
-
-            db.all(sql, (err, users) => {
-                if (err) return reject("Veritabanı hatası");
-                try {
-                    resolve(users);
-                } catch (error) {
-                    return reject("veri yok");
-                }
-
-
-            });
-        });
-    },
-
-
-    async dispenserConfigUpdate(data) {
-
-        const db = await getDbConnection();
-        const sql = "UPDATE DispenserConfig SET DeviceID = ?, SCPNo = ?, Address = ?, Protocol = ?, Timeout = ?,  ErrorCycle = ?   WHERE ID = ?";
-
-        const params = [data.DeviceID, data.SCPNo, data.Address, data.Protocol, data.Timeout, data.ErrorCycle, data.ID];
-
-        return new Promise((resolve, reject) => {
-
-            db.run(sql, params, function (err) {
-                if (err) {
-                    console.error(err);
-                    return reject("Update Error");
-                }
-
-                if (this.changes === 0) {
-                    return reject("error.");
-                }
-                resolve({ success: true, message: "Update Success" });
-            });
-        });
-    },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        async dispenserNozzlesGet() {
-
-        const db = await getDbConnection();
-        const sql = "SELECT * FROM DispenserNozzles";
-
-        return new Promise((resolve, reject) => {
-
-            db.all(sql, (err, users) => {
-                if (err) return reject("Veritabanı hatası");
-                try {
-                    resolve(users);
-                } catch (error) {
-                    return reject("veri yok");
-                }
-
-
-            });
-        });
-    },
-
-
-
-
-
-
-
-    async dispenserNozzlesUpdate(data) {
-
-        const db = await getDbConnection();
-        const sql = "UPDATE DispenserNozzles SET PumpNo = ?, NozzleNo = ?, FuelNo = ?, UnitPrice = ?, UnitPrice = ?,  AmountTotal = ?   WHERE ID = ?";
-
-        const params = [data.PumpNo, data.NozzleNo, data.FuelNo, data.UnitPrice, data.VolumeTotal, data.AmountTotal, data.ID];
-
-        return new Promise((resolve, reject) => {
-
-            db.run(sql, params, function (err) {
-                if (err) {
-                    console.error(err);
-                    return reject("Update Error");
-                }
-
-                if (this.changes === 0) {
-                    return reject("error.");
-                }
-                resolve({ success: true, message: "Update Success" });
-            });
-        });
-    },
 
 
 

@@ -8,7 +8,11 @@ import { RoleBasedRoute } from "./components/RoleBasedRoute";
 import Archive from "./pages/Archive";
 import Pumps from './pages/Pumps';
 import Login from './pages/login';
+import DBTransactions from './pages/dbTransactions';
+
+
 import AdminDashboard from './pages/AdminDashboard';
+
 
 
 function App() {
@@ -30,12 +34,13 @@ function App() {
 
         <Route element={<RoleBasedRoute allowedRoles={['1']} />}>
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/db-transactions" element={<DBTransactions />} />
+
         </Route>
 
 
 
-        <Route path="/" element={<Navigate to="/pumps" replace />} />
-      </Route>
+        <Route path="/" element={<Navigate to="/pumps" replace />} /></Route>
 
       <Route path="*" element={<Navigate to="/pumps" replace />} />
     </Routes>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-import { LogOut, Menu, X, Archive,Fuel,UserCog } from "lucide-react";
+import { LogOut, Menu, X, Archive,Fuel,UserCog ,Database } from "lucide-react";
 import { useAuth } from '../context/AuthContext';
 
 
@@ -37,6 +37,8 @@ const Sidebar = () => {
         { id: 2, name: "Archive", to: "/archive", icon: <Archive size={20} />,roles:["0","1","2"] },
         { id: 3, name: "Pumps", to: "/pumps", icon: <Fuel size={20} />,roles:["0","1","2"] },
         { id: 4, name: "Admin Dashboard", to: "/admin-dashboard", icon: <UserCog size={20} />,roles:["1"] },
+        { id: 5, name: "DB Transactions", to: "/db-transactions", icon: <Database size={20} />,roles:["1"] },
+
 
     ];
     
