@@ -1,7 +1,7 @@
 const pumpsGetUseCase = require("./../../../use-case/pump/pumpsGet")
 
 
-async function pumpsGet(req, res, next) {
+exports.pumpsGet = async (req, res, next) => {
     try {
 
 
@@ -14,5 +14,3 @@ async function pumpsGet(req, res, next) {
     }
 }
 
-
-module.exports = { pumpsGet }

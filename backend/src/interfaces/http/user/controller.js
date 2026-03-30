@@ -14,7 +14,7 @@ const db_models = require("./../../../infrastructure/db/models")
 
 
 
-async function login(req, res) {
+exports.login = async (req, res) => {
     try {
         let result = await loginUseCase(req.body, { db_models, jwtService })
 
@@ -36,7 +36,7 @@ async function login(req, res) {
 }
 
 
-async function signup(req, res) {
+exports.signup = async (req, res)=> {
     try {
         let result = await signupUseCase(req.body, { db_models })
         res.status(200).json({ status: true, result: result })
@@ -49,7 +49,7 @@ async function signup(req, res) {
 }
 
 
-async function GetAll(req, res) {
+exports.GetAll = async (req, res) => {
     try {
 
 
@@ -65,7 +65,7 @@ async function GetAll(req, res) {
 
 
 
-async function update(req, res) {
+exports.update = async (req, res) => {
     try {
 
 
@@ -86,7 +86,7 @@ async function update(req, res) {
 
 
 
-async function Userdelete(req, res) {
+exports.Userdelete = async (req, res) => {
     try {
 
 
@@ -106,7 +106,7 @@ async function Userdelete(req, res) {
 
 
 
-async function me(req, res) {
+exports.me = async(req, res) => {
     try {
 
         req.body = req.user
@@ -121,7 +121,7 @@ async function me(req, res) {
 }
 
 
-async function logout(req, res) {
+exports.logout = (req, res) => {
     try {
 
         res.clearCookie('token', {
@@ -140,4 +140,3 @@ async function logout(req, res) {
 
 
 
-module.exports = { login, signup, GetAll, update, Userdelete, me, logout }

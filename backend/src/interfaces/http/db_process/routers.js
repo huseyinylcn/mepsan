@@ -21,8 +21,10 @@ router.post("/v1/update/country-type-def", controller.countryTypeDefUpdate)
 router.post("/v1/get/dispencer-config", controller.dispenserConfigGet)
 router.post("/v1/update/dispencer-config", controller.dispenserConfigUpdate)
 
-router.post("/v1/get/dispencer-config", controller.dispenserConfigGet)
-router.post("/v1/update/dispencer-config", controller.dispenserConfigUpdate)
+
+router.post("/v1/get/dispencer-nozzles", controller.dispenserNozzlesGet)
+router.post("/v1/update/dispencer-nozzles", controller.dispenserNozzlesUpdate)
+
 
 
 

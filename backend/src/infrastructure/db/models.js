@@ -387,6 +387,68 @@ let models = {
 
 
 
+
+
+
+
+
+
+
+
+
+
+        async dispenserNozzlesGet() {
+
+        const db = await getDbConnection();
+        const sql = "SELECT * FROM DispenserNozzles";
+
+        return new Promise((resolve, reject) => {
+
+            db.all(sql, (err, users) => {
+                if (err) return reject("Veritabanı hatası");
+                try {
+                    resolve(users);
+                } catch (error) {
+                    return reject("veri yok");
+                }
+
+
+            });
+        });
+    },
+
+
+
+
+
+
+
+    async dispenserNozzlesUpdate(data) {
+
+        const db = await getDbConnection();
+        const sql = "UPDATE DispenserNozzles SET PumpNo = ?, NozzleNo = ?, FuelNo = ?, UnitPrice = ?, UnitPrice = ?,  AmountTotal = ?   WHERE ID = ?";
+
+        const params = [data.PumpNo, data.NozzleNo, data.FuelNo, data.UnitPrice, data.VolumeTotal, data.AmountTotal, data.ID];
+
+        return new Promise((resolve, reject) => {
+
+            db.run(sql, params, function (err) {
+                if (err) {
+                    console.error(err);
+                    return reject("Update Error");
+                }
+
+                if (this.changes === 0) {
+                    return reject("error.");
+                }
+                resolve({ success: true, message: "Update Success" });
+            });
+        });
+    },
+
+
+
+
 }
 
 module.exports = models;
