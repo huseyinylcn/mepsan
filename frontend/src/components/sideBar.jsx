@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-import { LogOut, Menu, X, Archive,Fuel,UserCog ,Database } from "lucide-react";
+import { LogOut, Menu, X, Archive, Fuel, UserCog, Database } from "lucide-react";
 import { useAuth } from '../context/AuthContext';
 
 
@@ -12,17 +12,23 @@ import { useAuth } from '../context/AuthContext';
 
 
 const Sidebar = () => {
-  
-  const { user,logout } = useAuth();
+
+
+    const handleMenuClick = () => {
+        localStorage.removeItem("activeDashboardTab"); // Son kalınan sayfayı sil
+        localStorage.removeItem("dashboardHistory");    // Geçmişi temizle
+    };
+
+    const { user, logout } = useAuth();
     const userType = String(user.Type)
     const userName = user.Name
     const userSurname = user.Surname
 
-    
+
     const roleMap = { "0": "Stajyer", "1": "Admin", "2": "Üye" };
 
     const [isOpen, setIsOpen] = React.useState(false);
- 
+
 
     React.useEffect(() => {
         if (isOpen) {
@@ -34,25 +40,25 @@ const Sidebar = () => {
 
     const menuList = [
         // { id: 1, name: "Dashboard", to: "/dashboard", icon: <LayoutDashboard size={20} /> , roles:["0","1","2"]},
-        { id: 2, name: "Archive", to: "/archive", icon: <Archive size={20} />,roles:["0","1","2"] },
-        { id: 3, name: "Pumps", to: "/pumps", icon: <Fuel size={20} />,roles:["0","1","2"] },
-        { id: 4, name: "Admin Dashboard", to: "/admin-dashboard", icon: <UserCog size={20} />,roles:["1"] },
-        { id: 5, name: "DB Transactions", to: "/db-transactions", icon: <Database size={20} />,roles:["1"] },
+        { id: 2, name: "Archive", to: "/archive", icon: <Archive size={20} />, roles: ["0", "1", "2"] },
+        { id: 3, name: "Pumps", to: "/pumps", icon: <Fuel size={20} />, roles: ["0", "1", "2"] },
+        { id: 4, name: "Admin Dashboard", to: "/admin-dashboard", icon: <UserCog size={20} />, roles: ["1"] },
+        { id: 5, name: "DB Transactions", to: "/db-transactions", icon: <Database size={20} />, roles: ["1"] },
 
 
     ];
-    
 
 
 
-const filteredMenu = menuList.filter(item => item.roles.includes(userType));
+
+    const filteredMenu = menuList.filter(item => item.roles.includes(userType));
 
 
 
 
     return (
         <>
-                 <header className="fixed left-0 top-0 z-30 flex h-16 w-full items-center justify-between border-b border-slate-200 bg-white px-4 md:hidden">
+            <header className="fixed left-0 top-0 z-30 flex h-16 w-full items-center justify-between border-b border-slate-200 bg-white px-4 md:hidden">
                 <button
                     type="button"
                     onClick={() => setIsOpen(true)}
@@ -77,20 +83,19 @@ const filteredMenu = menuList.filter(item => item.roles.includes(userType));
             )}
 
             <aside
-                className={`fixed left-0 top-0 z-50 flex flex-col bg-mepsan-primary text-white shadow-2xl transition-all duration-300 ease-in-out md:w-64 md:z-10 ${
-                    isOpen ? "translate-x-0" : "-translate-x-full"
-                } md:translate-x-0 w-[280px] h-[100dvh] overflow-hidden border-r border-white/5`}
+                className={`fixed left-0 top-0 z-50 flex flex-col bg-mepsan-primary text-white shadow-2xl transition-all duration-300 ease-in-out md:w-64 md:z-10 ${isOpen ? "translate-x-0" : "-translate-x-full"
+                    } md:translate-x-0 w-[280px] h-[100dvh] overflow-hidden border-r border-white/5`}
             >
-               
+
                 <div className="flex h-20 shrink-0 items-center px-6 border-b border-white/5">
                     <div className="flex items-center gap-3">
-                       
+
                         <div className="flex h-10 w-10 items-center justify-center rounded-xl  shadow-inner">
                             <img src="/logo.png" alt="Mepsan" className="h-7 w-7 object-contain" />
                         </div>
                         <span className="text-xl font-black tracking-widest uppercase text-white">Mepsan</span>
                     </div>
-                    
+
                     <button onClick={() => setIsOpen(false)} className="ml-auto text-white/40 hover:text-white md:hidden">
                         <X size={20} />
                     </button>
@@ -101,7 +106,20 @@ const filteredMenu = menuList.filter(item => item.roles.includes(userType));
                         <NavLink
                             key={item.id}
                             to={item.to}
-                            onClick={() => setIsOpen(false)}
+                            onClick={() => {
+                                setIsOpen(false); // Sidebar'ı kapat
+
+                                if (item.to === "/db-transactions") {
+                          
+                                    localStorage.removeItem("activeDashboardTab");
+                                    localStorage.removeItem("dashboardHistory");
+                                }
+                            }}
+
+
+
+
+
                             className={({ isActive }) => `
                                 group relative flex items-center gap-3 rounded-xl px-4 py-3.5 transition-all duration-200
                                 ${isActive
@@ -112,7 +130,7 @@ const filteredMenu = menuList.filter(item => item.roles.includes(userType));
                             {({ isActive }) => (
                                 <>
                                     <div className={`absolute left-0 h-6 w-1 rounded-r-full bg-white transition-all ${isActive ? "opacity-100" : "opacity-0"}`} />
-                                    
+
                                     <span className={`transition-transform duration-200 ${isActive ? "scale-110" : "group-hover:scale-110"}`}>
                                         {item.icon}
                                     </span>
@@ -127,7 +145,7 @@ const filteredMenu = menuList.filter(item => item.roles.includes(userType));
                     <div className="flex items-center gap-3 rounded-2xl bg-white/5 p-4 border border-white/5 hover:bg-white/10 transition-all">
                         <div className="relative h-10 w-10 shrink-0">
                             <div className="flex h-full w-full items-center justify-center rounded-xl bg-mepsan-secondary text-sm font-bold text-white">
-                               {userName[0]}{userSurname[0]}
+                                {userName[0]}{userSurname[0]}
                             </div>
                             <div className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-2 border-mepsan-primary bg-[#2E7D32]" />
                         </div>
@@ -144,7 +162,7 @@ const filteredMenu = menuList.filter(item => item.roles.includes(userType));
                             <LogOut size={18} />
                         </button>
                     </div>
-                    
+
                     <p className="mt-4 text-center text-[9px] font-bold tracking-[0.2em] text-slate-600 uppercase">
                         v1.0.0 - Mepsan Tech
                     </p>

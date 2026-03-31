@@ -23,17 +23,19 @@ export function useTables() {
   };
 
 
-  const triggerTableContent = (tableName) => {
-    setLoading2(true);
-    tableContent(tableName)
-      .then(data => {
-        setTableContent(data.result);
-        console.log(data.result);
-      })
-      .catch((err) => console.error(err))
-      .finally(() => setLoading2(false));
-  };
-
+const triggerTableContent = (tableName) => {
+  setLoading2(true);
+  return tableContent(tableName) 
+    .then(data => {
+      setTableContent(data.result);
+      return data.result; 
+    })
+    .catch((err) => {
+      console.error(err);
+      throw err; 
+    })
+    .finally(() => setLoading2(false));
+};
 
   const triggerTableUpdate = (column) => {
     setLoading3(true);

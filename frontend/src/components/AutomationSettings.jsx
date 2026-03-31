@@ -1,15 +1,17 @@
 
-import { Save, Network, Trash2, Settings2, Activity, Cog, ChevronDown, Lock ,Fuel} from "lucide-react";
+import { Save, Network, Trash2, Settings2, Activity, Cog, ChevronDown,Lock } from "lucide-react";
 import { useTables } from "./../hooks/dbTransactions";
-import { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 
 
 
-export default function PumpSettings({ onNavigate, targetId }) {
+export default function AutomationSettings({ onNavigate }) {
+
   const { triggerTableContent, triggerTableUpdate, loading3 } = useTables();
-  const [DispenserConfig, setDispenserConfig] = useState([]);
+
+  const [AutomationConfig, setAutomationConfig] = useState([]);
   const [PeriperalDevicesTypedef, setPeriperalDevicesTypedef] = useState([]);
-  const [DispenserProtocol, setDispenserProtocol] = useState([]);
+  const [AutomationProtocols, setAutomationProtocols] = useState([]);
   const [SCPNo, setSCPNo] = useState([]);
 
 
@@ -17,11 +19,12 @@ export default function PumpSettings({ onNavigate, targetId }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res1 = await triggerTableContent({ tableName: "DispenserConfig" });
-      if (res1) setDispenserConfig(res1)
+      const res1 = await triggerTableContent({ tableName: "AutomationConfig" });
+      if (res1) setAutomationConfig(res1)
+       
 
-      const res3 = await triggerTableContent({ tableName: "DispenserProtocols" });
-      if (res3) setDispenserProtocol(res3)
+      const res3 = await triggerTableContent({ tableName: "AutomationProtocols" });
+      if (res3) setAutomationProtocols(res3)
 
       const res2 = await triggerTableContent({ tableName: "PeriperalDevicesTypedef" });
       if (res2) setPeriperalDevicesTypedef(res2)
@@ -35,33 +38,36 @@ export default function PumpSettings({ onNavigate, targetId }) {
   }, []);
 
   const handleInputChange = (index, field, value) => {
-    const updatedData = [...DispenserConfig];
+    const updatedData = [...AutomationConfig];
     updatedData[index][field] = value;
-    setDispenserConfig(updatedData);
+    setAutomationConfig(updatedData);
   };
 
 
 
 
-  const handleSave = async (item) => {
-    try {
-      const result = await triggerTableUpdate({
-        tableName: "DispenserConfig",
-        content: item
-      });
+const handleSave = async (item) => {
+  try {
 
-      if (result) {
-        console.log("ok!");
-      }
-    } catch (err) {
-      console.error(":", err);
+    const result = await triggerTableUpdate({
+      tableName: "AutomationConfig",
+      content: item
+    });
+
+    if (result) {
+      console.log("Başarıyla güncellendi!");
+   
     }
-  };
+  } catch (err) {
+    console.error("Güncelleme hatası:", err);
+  }
+};
 
 
   return (
     <div className="w-full mx-auto p-4 md:p-8 animate-in fade-in duration-700">
 
+      {/* Üst Bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
         <div>
           <h2 className="text-3xl font-black text-slate-900 flex items-center gap-3">
@@ -69,22 +75,24 @@ export default function PumpSettings({ onNavigate, targetId }) {
               <Settings2 size={24} />
             </div>
 
-            Pump Configuration
+            Automation Configuration
           </h2>
         </div>
 
       </div>
 
       <div className="space-y-4">
-        {DispenserConfig.map((item, index) => (
+        {AutomationConfig.map((item, index) => (
           <div key={index} className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-blue-400 transition-all shadow-sm">
             <div className="flex flex-wrap items-center gap-6">
 
+              {/* SCP No Kısmı */}
               <div className="min-w-[100px]">
                 <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Device </div>
                 <div className="text-xl font-black text-slate-800">#{item.ID || "000"}</div>
               </div>
 
+              {/* Form Alanları */}
               <div className="flex-grow grid grid-cols-1 md:grid-cols-3 gap-6">
 
 
@@ -132,14 +140,18 @@ export default function PumpSettings({ onNavigate, targetId }) {
 
 
 
+
+                {/* Protokol + Detay Butonu */}
                 <div className="flex flex-col gap-1.5 relative group/field">
                   <div className="flex justify-between items-end px-1 mb-0.5">
+                    {/* Label Alanı */}
                     <label className="text-[11px] font-black text-slate-500 uppercase tracking-wider">
                       Protocol
                     </label>
 
+                    {/* Daha Belirgin Detay Butonu */}
                     <button
-                      onClick={() => onNavigate("dispenserProtocol", item.Protocol)}
+                      onClick={() => onNavigate("automationProtocols")}
                       className="flex items-center gap-1.5 px-2 py-1 bg-white border border-slate-200 text-blue-600 rounded-lg shadow-sm hover:border-blue-500 hover:bg-blue-50 hover:shadow-blue-100 transition-all active:scale-95 group/btn"
                       title="Parametreleri Düzenle"
                     >
@@ -159,8 +171,9 @@ export default function PumpSettings({ onNavigate, targetId }) {
                       className="w-full bg-slate-50 border border-slate-200 text-sm font-bold rounded-xl p-3 outline-none focus:ring-2 focus:ring-blue-100 focus:bg-white transition-all appearance-none"
                     >
                       <option value="">Seçiniz...</option>
-                      {DispenserProtocol.map(p => <option key={p.ID} value={p.ID}>{p.Name}</option>)}
+                      {AutomationProtocols.map(p => <option key={p.ID} value={p.ID}>{p.Name}</option>)}
                     </select>
+                    {/* Custom Arrow yerine Detay Linki eklenebilir */}
                     <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none text-slate-400">
                       <ChevronDown size={16} />
                     </div>
@@ -173,7 +186,7 @@ export default function PumpSettings({ onNavigate, targetId }) {
                 <div className="flex flex-col gap-1.5 relative group/field">
                   <div className="flex justify-between items-end px-1 mb-0.5">
                     <label className="text-[11px] font-black text-slate-500 uppercase tracking-wider">
-                      SCP
+                      SCP 
                     </label>
 
                     <button
@@ -211,86 +224,73 @@ export default function PumpSettings({ onNavigate, targetId }) {
 
 
 
-               
-
-                  <div className="flex flex-col gap-1.5 group/field">
-                    <div className="flex justify-between items-center px-1">
-                      <label className="text-[11px] font-bold text-slate-500 uppercase">Address</label>
-                      <button className="text-slate-400 hover:text-emerald-500 transition-colors">
-                        <Activity size={12} />
-                      </button>
-                    </div>
-                    <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-3 focus-within:bg-white focus-within:ring-2 focus-within:ring-blue-100 transition-all">
-                      <Network size={16} className="text-slate-400" />
-                      <input
-                        type="text"
-                        value={item.Address || ""}
-                        onChange={(e) => handleInputChange(index, 'Address', e.target.value)}
-                        className="bg-transparent border-none w-full text-sm font-bold p-3 outline-none"
-                      />
-                    </div>
-                  </div>
-
-
-                  <div className="flex flex-col gap-1.5 group/field">
-                    <div className="flex justify-between items-center px-1">
-                      <label className="text-[11px] font-bold text-slate-500 uppercase">Timeout</label>
-                      <button className="text-slate-400 hover:text-emerald-500 transition-colors">
-                        <Activity size={12} />
-                      </button>
-                    </div>
-                    <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-3 focus-within:bg-white focus-within:ring-2 focus-within:ring-blue-100 transition-all">
-                      <Network size={16} className="text-slate-400" />
-                      <input
-                        type="text"
-                        value={item.Timeout || ""}
-                        onChange={(e) => handleInputChange(index, 'Timeout', e.target.value)}
-                        className="bg-transparent border-none w-full text-sm font-bold p-3 outline-none"
-                      />
-                    </div>
-                  </div>
-
-
-                  <div className="flex flex-col gap-1.5 group/field">
-                    <div className="flex justify-between items-center px-1">
-                      <label className="text-[11px] font-bold text-slate-500 uppercase">ErrorCycle</label>
-                      <button className="text-slate-400 hover:text-emerald-500 transition-colors">
-                        <Activity size={12} />
-                      </button>
-                    </div>
-                    <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-3 focus-within:bg-white focus-within:ring-2 focus-within:ring-blue-100 transition-all">
-                      <Network size={16} className="text-slate-400" />
-                      <input
-                        type="text"
-                        value={item.ErrorCycle || ""}
-                        onChange={(e) => handleInputChange(index, 'ErrorCycle', e.target.value)}
-                        className="bg-transparent border-none w-full text-sm font-bold p-3 outline-none"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-1.5 group/field">
-         
-
-                    <button 
-                      onClick={() => onNavigate("settingsPorts", item.ID) }
-                      className="flex items-center justify-center gap-2 h-[40px] bg-blue-500 hover:bg-blue-700 text-white rounded-xl shadow-sm shadow-blue-100 transition-all active:scale-[0.98] group/btn"
-                    >
-                      <Fuel size={16} className="group-hover/btn:animate-pulse" />
-                      <span className="text-sm font-bold">Pump Nozzles</span>
+                <div className="flex flex-col gap-1.5 group/field">
+                  <div className="flex justify-between items-center px-1">
+                    <label className="text-[11px] font-bold text-slate-500 uppercase">Address</label>
+                    <button className="text-slate-400 hover:text-emerald-500 transition-colors">
+                      <Activity size={12} />
                     </button>
                   </div>
-
-
+                  <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-3 focus-within:bg-white focus-within:ring-2 focus-within:ring-blue-100 transition-all">
+                    <Network size={16} className="text-slate-400" />
+                    <input
+                      type="text"
+                      value={item.Address || ""}
+                      onChange={(e) => handleInputChange(index, 'Address', e.target.value)}
+                      className="bg-transparent border-none w-full text-sm font-bold p-3 outline-none"
+                    />
+                  </div>
                 </div>
 
 
-              
+                {/* Timeout  */}
+                <div className="flex flex-col gap-1.5 group/field">
+                  <div className="flex justify-between items-center px-1">
+                    <label className="text-[11px] font-bold text-slate-500 uppercase">Timeout</label>
+                    <button className="text-slate-400 hover:text-emerald-500 transition-colors">
+                      <Activity size={12} />
+                    </button>
+                  </div>
+                  <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-3 focus-within:bg-white focus-within:ring-2 focus-within:ring-blue-100 transition-all">
+                    <Network size={16} className="text-slate-400" />
+                    <input
+                      type="text"
+                      value={item.Timeout || ""}
+                      onChange={(e) => handleInputChange(index, 'Timeout', e.target.value)}
+                      className="bg-transparent border-none w-full text-sm font-bold p-3 outline-none"
+                    />
+                  </div>
+                </div>
 
+
+                {/* ErrorCycle  */}
+                <div className="flex flex-col gap-1.5 group/field">
+                  <div className="flex justify-between items-center px-1">
+                    <label className="text-[11px] font-bold text-slate-500 uppercase">ErrorCycle</label>
+                    <button className="text-slate-400 hover:text-emerald-500 transition-colors">
+                      <Activity size={12} />
+                    </button>
+                  </div>
+                  <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-3 focus-within:bg-white focus-within:ring-2 focus-within:ring-blue-100 transition-all">
+                    <Network size={16} className="text-slate-400" />
+                    <input
+                      type="text"
+                      value={item.ErrorCycle || ""}
+                      onChange={(e) => handleInputChange(index, 'ErrorCycle', e.target.value)}
+                      className="bg-transparent border-none w-full text-sm font-bold p-3 outline-none"
+                    />
+                  </div>
+                </div>
+
+
+              </div>
+
+              {/* En Sağdaki Küçük Aksiyonlar */}
 
               <div className="flex flex-col gap-2 ml-auto md:border-l md:pl-6 border-slate-100 justify-center">
+                {/* Kaydet Butonu - Genelde en üstte durması daha güvenli hissettirir */}
                 <button
-                  disabled={loading3}
+                  disabled={loading3} // İşlem bitene kadar tekrar tıklanmasın
                   onClick={() => handleSave(item)}
                   className={`p-3 rounded-xl transition-all group ${loading3 ? "text-blue-400 bg-blue-50 cursor-not-allowed" : "text-slate-400 hover:text-emerald-600 hover:bg-emerald-50"
                     }`}
@@ -303,6 +303,7 @@ export default function PumpSettings({ onNavigate, targetId }) {
                   )}
                 </button>
 
+                {/* Silme Butonu */}
                 <button
                   className="p-3 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all group"
                   title="Sil"
