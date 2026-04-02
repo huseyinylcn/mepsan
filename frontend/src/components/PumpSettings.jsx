@@ -273,7 +273,7 @@ export default function PumpSettings({ onNavigate, targetId }) {
          
 
                     <button 
-                      onClick={() => onNavigate("settingsPorts", item.ID) }
+                      onClick={() => onNavigate("dispenserNozzle", item.ID) }
                       className="flex items-center justify-center gap-2 h-[40px] bg-blue-500 hover:bg-blue-700 text-white rounded-xl shadow-sm shadow-blue-100 transition-all active:scale-[0.98] group/btn"
                     >
                       <Fuel size={16} className="group-hover/btn:animate-pulse" />

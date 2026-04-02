@@ -10,43 +10,39 @@ export default function DispenserProtocolSettings() {
     const fetchData = async () => {
       const res1 = await triggerTableContent({ tableName: "AutomationProtocols" });
       if (res1) setAutomationProtocols(res1);
-     
+
     };
     fetchData();
   }, []);
 
-  // İnput değişikliklerini yöneten fonksiyon
   const handleInputChange = (index, field, value) => {
     const updatedData = [...AutomationProtocols];
     updatedData[index][field] = value;
     setAutomationProtocols(updatedData);
   };
 
-  // Tekil satırı kaydetme fonksiyonu
   const handleSave = async (item) => {
 
-    await triggerTableUpdate({ 
-      tableName: "AutomationProtocols", 
-      content: item 
+    await triggerTableUpdate({
+      tableName: "AutomationProtocols",
+      content: item
     });
   };
 
   return (
     <div className="w-full mx-auto p-4 md:p-8 animate-in fade-in duration-700">
-      
-      {/* Üst Bar */}
+
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
         <div>
           <h2 className="text-3xl font-black text-slate-900 flex items-center gap-3">
             <div className="p-2 bg-emerald-600 rounded-lg text-white">
               <Cpu size={24} />
             </div>
-          Automation Protocol Configuration
+            Automation Protocol Configuration
           </h2>
         </div>
       </div>
 
-      {/* Liste Alanı */}
       <div className="space-y-4">
         {loading2 && AutomationProtocols.length === 0 ? (
           <div className="text-center py-20 text-slate-400 animate-pulse font-bold">
@@ -54,17 +50,17 @@ export default function DispenserProtocolSettings() {
           </div>
         ) : (
           AutomationProtocols.map((item, index) => (
-            
+
             <div key={index} className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-400 transition-all shadow-sm">
               <div className="flex items-center gap-8">
-                
-           
+
+
                 <div className="min-w-[80px] border-r border-slate-100 pr-6">
                   <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1"> ID</div>
                   <div className="text-xl font-black text-slate-800">#{item.ID}</div>
                 </div>
 
-     
+
                 <div className="flex-grow flex flex-col gap-1.5 group/field">
                   <div className="flex justify-between items-center px-1">
                     <label className="text-[11px] font-bold text-slate-500 uppercase flex items-center gap-1">
@@ -130,7 +126,7 @@ export default function DispenserProtocolSettings() {
 
       {AutomationProtocols.length === 0 && !loading2 && (
         <div className="text-center py-20 bg-white rounded-3xl border-2 border-dashed text-slate-400">
-     No protocols were found.
+          No protocols were found.
         </div>
       )}
     </div>

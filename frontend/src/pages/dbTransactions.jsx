@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 
-import { Workflow, Cpu, ArrowLeft, Fuel, CreditCard, Network, Orbit, Terminal } from "lucide-react";
+import { Workflow, Cpu, ArrowLeft, Fuel, CreditCard, Network, Orbit, Terminal, Settings } from "lucide-react";
+
+
 
 import PumpSettings from "../components/PumpSettings";
 import DeviceSettings from "../components/DeviceSettings";
@@ -12,14 +14,10 @@ import ECRSettings from "../components/ECRSettings";
 import ECRProtocolsSettings from "../components/ECRProtocolsSettings";
 import DotSettings from "../components/DotSettings";
 import LogSettings from "../components/LogSettings";
-
-
-
-
-
-
-
-
+import DispenserNozzles from "../components/DispenserNozzles";
+import SettingsMain from "../components/SettingsMain";
+import FuelTypedef from "../components/FuelTypedef";
+import CountryTypedefSettings from "../components/CountryTypedefSettings";
 
 
 
@@ -45,10 +43,24 @@ export default function Dashboard() {
   }, [history]);
 
 
-  const [selectedDeviceId, setSelectedDeviceId] = useState(null)
+
+
+
+
+  const [selectedDeviceId, setSelectedDeviceId] = useState(() => {
+    const savedId = localStorage.getItem("selectedDeviceId");
+    return savedId !== null ? JSON.parse(savedId) : null;
+  });
+
+
+  useEffect(() => {
+    localStorage.setItem("selectedDeviceId", JSON.stringify(selectedDeviceId));
+  }, [selectedDeviceId]);
+
+
   const navigateTo = (nextTab, id = null) => {
     setHistory((prev) => [...prev, activeTab]);
-    setSelectedDeviceId(id); 
+    setSelectedDeviceId(id);
     setActiveTab(nextTab);
   };
 
@@ -80,39 +92,56 @@ export default function Dashboard() {
     {
       id: "automation",
       title: "Automation Configuration",
-      icon: <Workflow size={24} />, 
+      icon: <Workflow size={24} />,
       color: "bg-indigo-600"
     },
     {
       id: "ecr",
       title: "ECR Configuration",
-      icon: <CreditCard size={24} />, 
-      color: "bg-rose-600" 
+      icon: <CreditCard size={24} />,
+      color: "bg-rose-600"
     },
     {
       id: "device",
       title: "Device Settings",
-      icon: <Cpu size={24} />, 
+      icon: <Cpu size={24} />,
       color: "bg-emerald-600"
     },
     {
       id: "settingsPorts",
       title: "Settings Ports",
-      icon: <Network size={24} />, 
-      color: "bg-slate-700" 
+      icon: <Network size={24} />,
+      color: "bg-slate-700"
     },
+    {
+      id: "settingsMain",
+      title: "Settings Main",
+      icon: <Settings size={24} />,
+      color: "bg-emerald-700"
+    },
+
+
     {
       id: "dotSettings",
       title: "Settings Dot",
-      icon: <Orbit size={24} />, 
-      color: "bg-indigo-700" 
+      icon: <Orbit size={24} />,
+      color: "bg-indigo-700"
     },
     {
       id: "logSettings",
       title: "Settings Log",
-      icon: <Terminal size={24} />, 
-      color: "bg-indigo-700" 
+      icon: <Terminal size={24} />,
+      color: "bg-indigo-700"
     },
+        {
+      id: "countrytypedef",
+      title: "Country Settings",
+      icon: <Settings size={24} />,
+      color: "bg-slate-700"
+    },
+
+
+    
   ];
 
   if (activeTab === "menu") {
@@ -123,7 +152,7 @@ export default function Dashboard() {
           {actions.map((item) => (
             <button
               key={item.id}
-             onClick={() => navigateTo(item.id, -1)}
+              onClick={() => navigateTo(item.id, -1)}
               className="p-8 bg-white rounded-3xl shadow-sm border hover:shadow-md transition-all flex flex-col items-center"
             >
               <div className={`${item.color} text-white p-4 rounded-xl mb-4`}>
@@ -154,18 +183,26 @@ export default function Dashboard() {
 
 
         <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-200">
-          {activeTab === "pompa" && <PumpSettings onNavigate={navigateTo} targetId={selectedDeviceId}/>}
-          {activeTab === "automation" && <AutomationSettings onNavigate={navigateTo} targetId={selectedDeviceId}/>}
-          {activeTab === "ecr" && <ECRSettings onNavigate={navigateTo} targetId={selectedDeviceId}/>}
+          {activeTab === "pompa" && <PumpSettings onNavigate={navigateTo} targetId={selectedDeviceId} />}
+          {activeTab === "automation" && <AutomationSettings onNavigate={navigateTo} targetId={selectedDeviceId} />}
+          {activeTab === "ecr" && <ECRSettings onNavigate={navigateTo} targetId={selectedDeviceId} />}
 
 
           {activeTab === "device" && <DeviceSettings onNavigate={navigateTo} targetId={selectedDeviceId} />}
-          {activeTab === "dispenserProtocol" && <DispenserProtocolSettings onNavigate={navigateTo} targetId={selectedDeviceId}  />}
-          {activeTab === "settingsPorts" && <SettingsPorts onNavigate={navigateTo} targetId={selectedDeviceId}/>}
+          {activeTab === "dispenserProtocol" && <DispenserProtocolSettings onNavigate={navigateTo} targetId={selectedDeviceId} />}
+          {activeTab === "settingsPorts" && <SettingsPorts onNavigate={navigateTo} targetId={selectedDeviceId} />}
           {activeTab === "automationProtocols" && <AutomationProtocolSettings onNavigate={navigateTo} targetId={selectedDeviceId} />}
-          {activeTab === "ecrProtocols" && <ECRProtocolsSettings onNavigate={navigateTo} targetId={selectedDeviceId}/>}
-          {activeTab === "dotSettings" && <DotSettings onNavigate={navigateTo} targetId={selectedDeviceId}/>}
-          {activeTab === "logSettings" && <LogSettings onNavigate={navigateTo} targetId={selectedDeviceId}/>}
+          {activeTab === "ecrProtocols" && <ECRProtocolsSettings onNavigate={navigateTo} targetId={selectedDeviceId} />}
+          {activeTab === "dotSettings" && <DotSettings onNavigate={navigateTo} targetId={selectedDeviceId} />}
+          {activeTab === "logSettings" && <LogSettings onNavigate={navigateTo} targetId={selectedDeviceId} />}
+          {activeTab === "dispenserNozzle" && <DispenserNozzles onNavigate={navigateTo} targetId={selectedDeviceId} />}
+          {activeTab === "settingsMain" && <SettingsMain onNavigate={navigateTo} targetId={selectedDeviceId} />}
+          {activeTab === "fuelTypedef" && <FuelTypedef onNavigate={navigateTo} targetId={selectedDeviceId} />}
+          {activeTab === "countrytypedef" && <CountryTypedefSettings onNavigate={navigateTo} targetId={selectedDeviceId} />}
+
+
+
+
 
 
 
