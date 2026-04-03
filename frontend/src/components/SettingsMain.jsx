@@ -117,7 +117,7 @@ export default function SettingsMain({ onNavigate, targetId }) {
                                         </label>
 
                                         <button
-                                            onClick={() => onNavigate("dispenserProtocol")}
+                                            onClick={() => onNavigate("countrytypedef", item.Country)}
                                             className="flex items-center gap-1.5 px-2 py-1 bg-white border border-slate-200 text-blue-600 rounded-lg shadow-sm hover:border-blue-500 hover:bg-blue-50 hover:shadow-blue-100 transition-all active:scale-95 group/btn"
                                             title="Parametreleri Düzenle"
                                         >
