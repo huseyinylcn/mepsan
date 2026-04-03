@@ -23,7 +23,7 @@ import CountryTypedefSettings from "../components/CountryTypedefSettings";
 
 
 
-export default function Dashboard() {
+export default function Dashboard2() {
 
 
   const [activeTab, setActiveTab] = useState(() => {

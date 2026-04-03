@@ -7,7 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Oturum durumunu kontrol et
   const checkAuth = async () => {
     setLoading(true);
     try {

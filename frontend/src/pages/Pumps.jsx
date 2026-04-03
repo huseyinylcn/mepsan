@@ -2,42 +2,24 @@ import { usePumps } from '../hooks/pumps'
 import { Smartphone, Banknote, CreditCard, HelpCircle, Hourglass, Fuel, Car, AlertTriangle, CheckCircle2, Clock } from "lucide-react";
 
 const PTYPE_CONFIG = {
-    0: { label: "Mobile", color: "bg-blue-100 text-blue-700", icon: <Smartphone size={16} /> },
-    1: { label: "Cash", color: "bg-green-100 text-green-700", icon: <Banknote size={16} /> },
-    2: { label: "Credit Card", color: "bg-purple-100 text-purple-700", icon: <CreditCard size={16} /> },
-    default: { label: "Unknown", color: "bg-gray-100 text-gray-600", icon: <HelpCircle size={16} /> }
+    0: { label: "Mobile", color: "bg-blue-500/10 text-blue-400 border border-blue-500/20", icon: <Smartphone size={14} /> },
+    1: { label: "Cash", color: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20", icon: <Banknote size={14} /> },
+    2: { label: "Credit Card", color: "bg-purple-500/10 text-purple-400 border border-purple-500/20", icon: <CreditCard size={14} /> },
+    default: { label: "Unknown", color: "bg-slate-900 text-slate-500", icon: <HelpCircle size={14} /> }
 };
-
 
 const FTYPE_CONFIG = {
-    0: { label: "Card Reading Pending", color: "bg-blue-100 text-blue-700", icon: <Hourglass size={16} /> },
-    1: { label: "Filling in Progress", color: "bg-green-100 text-green-700", icon: <Fuel size={16} /> },
-    2: { label: "Vehicle is recognized", color: "bg-purple-100 text-purple-700", icon: <Car size={16} /> },
-    default: { label: "Unknown", color: "bg-gray-100 text-gray-600", icon: <HelpCircle size={16} /> }
+    0: { label: "Pending", color: "bg-amber-500/10 text-amber-400 border border-amber-500/20", icon: <Hourglass size={14} /> },
+    1: { label: "Filling", color: "bg-blue-500/10 text-blue-400 border border-blue-500/20", icon: <Fuel size={14} /> },
+    2: { label: "Recognized", color: "bg-indigo-500/10 text-indigo-400 border border-indigo-500/20", icon: <Car size={14} /> },
+    default: { label: "Unknown", color: "bg-slate-900 text-slate-500", icon: <HelpCircle size={14} /> }
 };
 
-
 const STATUS_CONFIG = {
-    0: {
-        label: "On hold",
-        color: "bg-slate-100 text-slate-600",
-        icon: <Clock size={16} />
-    },
-    1: {
-        label: "Ready",
-        color: "bg-emerald-100 text-emerald-700",
-        icon: <CheckCircle2 size={16} />
-    },
-    2: {
-        label: "Error",
-        color: "bg-red-100 text-red-700",
-        icon: <AlertTriangle size={16} />
-    },
-    default: {
-        label: "Unknown",
-        color: "bg-gray-100 text-gray-600",
-        icon: <HelpCircle size={16} />
-    }
+    0: { label: "On hold", color: "bg-slate-800 text-slate-400", icon: <Clock size={14} /> },
+    1: { label: "Ready", color: "bg-emerald-500/20 text-emerald-400", icon: <CheckCircle2 size={14} /> },
+    2: { label: "Error", color: "bg-red-500/20 text-red-400", icon: <AlertTriangle size={14} /> },
+    default: { label: "Unknown", color: "bg-slate-800 text-slate-400", icon: <HelpCircle size={14} /> }
 };
 
 const formatDate = (dateStr) => {
@@ -48,92 +30,75 @@ const formatDate = (dateStr) => {
 export default function Pumps() {
     const { pumps } = usePumps();
 
-    const pumpCards = pumps.map((pump,index) => {
+    const pumpCards = pumps.map((pump, index) => {
         const pType = PTYPE_CONFIG[pump.saleVariables.ptype] || PTYPE_CONFIG.default;
         const fType = FTYPE_CONFIG[pump.saleVariables.ftype] || FTYPE_CONFIG.default;
         const status = STATUS_CONFIG[pump.status.pump] || STATUS_CONFIG.default;
 
-
-        // Mantığı ayıklayıp sadeleştirdik
         const statusVal = parseInt(pump.status.ecr) | (parseInt(pump.status.pump) << 1) | (parseInt(pump.status.scu) << 2);
         const isActive = statusVal > 0;
 
         return (
-            <div key={index} className={`bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition-all hover:shadow-md relative overflow-hidden flex flex-col`}>
-            
-                <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${isActive ? 'bg-blue-500' : 'bg-blue-500'}`} />
-
-
-                <div className="flex justify-between items-start mb-6 pl-2">
+            <div key={index} className="bg-[#0f172a] p-5 rounded-xl border border-slate-800 shadow-xl hover:border-slate-700 transition-all flex flex-col group">
+                <div className="flex justify-between items-start mb-5 pl-1">
                     <div>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Pump</span>
-                        <h3 className="text-2xl font-black text-slate-800">#{pump.pumpNo}</h3>
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Pump Unit</span>
+                        <h3 className="text-2xl font-black text-white group-hover:text-blue-400 transition-colors">#{pump.pumpNo}</h3>
                     </div>
-
-                    <div className="flex items-center justify-center gap-3 px-6 py-4 bg-slate-50 border-2 border-slate-300 rounded-xl shadow-inner my-2">
-                        <Car size={24} className="text-slate-600" />
-                        <span className="text-2xl font-mono font-black text-slate-900 tracking-widest uppercase">
-                            {pump.saleVariables.fiscalNumber || "00-XXX-000"}
-                        </span>
+                    <div className="px-3 py-2 bg-slate-900/50 border border-slate-800 rounded-lg text-sm font-mono font-bold text-slate-200">
+                        {pump.saleVariables.fiscalNumber || "TR-PLATE"}
                     </div>
                 </div>
 
-
                 <div className="space-y-4 flex-grow">
-
-                    <div className="grid grid-cols-2 gap-2">
-                        <div className="bg-slate-50 p-3 rounded-xl">
-                            <p className="text-[10px] text-slate-400 uppercase font-semibold text-center">Amount</p>
-                            <p className="text-lg font-bold text-indigo-600 text-center">{pump.saleVariables.amount} ₺</p>
+                    <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800/50 text-center">
+                            <p className="text-[10px] text-slate-500 uppercase font-bold mb-1">Amount</p>
+                            <p className="text-xl font-black text-emerald-400">{pump.saleVariables.amount} ₺</p>
                         </div>
-                        <div className="bg-slate-50 p-3 rounded-xl">
-                            <p className="text-[10px] text-slate-400 uppercase font-semibold text-center">Volume</p>
-                            <p className="text-lg font-bold text-slate-700 text-center">{pump.saleVariables.volume} L</p>
+                        <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800/50 text-center">
+                            <p className="text-[10px] text-slate-500 uppercase font-bold mb-1">Volume</p>
+                            <p className="text-xl font-black text-blue-400">{pump.saleVariables.volume} L</p>
                         </div>
                     </div>
 
                     <div className="space-y-2.5 pt-2">
-                        <div className="flex justify-between text-sm">
-                            <span className="text-slate-500">Nozzle No</span>
-                            <span className="font-semibold text-slate-800">{pump.saleVariables.nozzleNo}</span>
-                        </div>
-
-                        <div className="flex justify-between items-center text-sm">
-                            <span className="text-slate-500">Status</span>
-                            <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium ${fType.color}`}>
+                        <div className="flex justify-between items-center text-[12px]">
+                            <span className="text-slate-400">Filling</span>
+                            <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md font-semibold ${fType.color}`}>
                                 {fType.icon} {fType.label}
                             </div>
                         </div>
-
-                        <div className="flex justify-between items-center text-sm">
-                            <span className="text-slate-500">Payment </span>
-                            <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium ${pType.color}`}>
+                        <div className="flex justify-between items-center text-[12px]">
+                            <span className="text-slate-400">Payment</span>
+                            <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md font-semibold ${pType.color}`}>
                                 {pType.icon} {pType.label}
                             </div>
                         </div>
-
-                        <div className="flex justify-between items-center text-sm">
-                            <span className="text-slate-500">Pumps Status</span>
-                            <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium ${status.color}`}>
+                        <div className="flex justify-between items-center text-[12px]">
+                            <span className="text-slate-400">Status</span>
+                            <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md font-semibold ${status.color}`}>
                                 {status.icon} {status.label}
                             </div>
                         </div>
-
                     </div>
                 </div>
 
-                <div className="mt-6 pt-3 border-t border-slate-100 text-[10px] text-slate-400 flex justify-between items-center">
-                    <span>Birim Fiyat: {pump.saleVariables.unitPrice} ₺</span>
-                    <span className="font-mono">{formatDate(pump.saleVariables.datetime)}</span>
+                <div className="mt-5 pt-4 border-t border-slate-800/80 text-[10px] text-slate-500 flex justify-between items-center">
+                    <span className="bg-slate-900 px-2 py-0.5 rounded">{pump.saleVariables.unitPrice} ₺/L</span>
+                    <span className="font-mono opacity-60 tracking-tighter">{formatDate(pump.saleVariables.datetime)}</span>
                 </div>
             </div>
         );
     });
 
     return (
-        <div className="min-h-screen bg-slate-50 p-6">
-            <h1 className="text-xl font-bold text-slate-800 mb-6">Fuel Pumps</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        /* ARKA PLAN: Navbar'daki bg-slate-950 ile birebir aynı (#020617) */
+        <div className="min-h-screen bg-[#020617] text-slate-100 p-6 w-full overflow-x-hidden">
+
+            
+            {/* GRID: Geniş ekranı full kullanan yapı */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6 gap-6 w-full">
                 {pumpCards}
             </div>
         </div>
