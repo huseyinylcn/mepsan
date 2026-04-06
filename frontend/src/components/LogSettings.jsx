@@ -2,7 +2,7 @@ import { Save, Network, Trash2, Settings2, Activity, Cog, Lock } from "lucide-re
 import { useTables } from "./../hooks/dbTransactions";
 import { useEffect, useState } from 'react';
 
-export default function LogSettings({ setActivePage,targetId }) {
+export default function LogSettings({ setActivePage,targetId,targeSetId }) {
     const { triggerTableContent, triggerTableUpdate, loading3 } = useTables();
     const [SettingsLog, setSettingsLog] = useState([]);
     const [PeriperalDevicesTypedef, setPeriperalDevicesTypedef] = useState([]);
@@ -50,7 +50,6 @@ export default function LogSettings({ setActivePage,targetId }) {
                         </div>
                         LOG Settings
                     </h2>
-                    <p className="text-slate-400 text-sm mt-1">Sistem ve cihaz loglama parametrelerini yönetin.</p>
                 </div>
             </div>
 
@@ -72,7 +71,7 @@ export default function LogSettings({ setActivePage,targetId }) {
                                     <div className="flex justify-between items-end px-1 mb-0.5">
                                         <label className="text-[11px] font-black text-slate-400 uppercase tracking-wider">Device</label>
                                         <button
-                                            onClick={() => {setActivePage("deviceSettings" )}}
+                                            onClick={() => {setActivePage("deviceSettings" ); targeSetId(item.DeviceID) }}
                                             className="flex items-center gap-1.5 px-2 py-1 bg-slate-800 border border-slate-700 text-blue-400 rounded-lg hover:bg-slate-700 transition-all active:scale-95 group/btn"
                                         >
                                             <span className="text-[10px] font-bold uppercase">Detail</span>

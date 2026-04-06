@@ -154,7 +154,7 @@ function App() {
       case 'portSettings':
         return <SettingsPorts setActivePage={handlePageChange} targetId={id} />;
       case 'logSettings':
-        return <LogSettings setActivePage={handlePageChange} targetId={id} />;
+        return <LogSettings setActivePage={handlePageChange} targetId={id} targeSetId={updateTargetId} />;
       case 'deviceSettings':
         return <DeviceSettings setActivePage={handlePageChange} targetId={id} targetSetId={updateTargetId} />;
       case 'pumpProtocol':
