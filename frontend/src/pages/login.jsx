@@ -1,17 +1,14 @@
 import { useState } from 'react';
-// 1. useNavigate importu kaldırıldı
 import { useLogin } from '../hooks/login';
 import { useAuth } from '../context/AuthContext';
 import mepsanLogo from '../assets/logo.png';
 import loginBg from '../assets/0_33.webp';
 
-// 2. setActivePage prop olarak eklendi
 export default function Login({ setActivePage }) {
     const { handleLogin, loading, error } = useLogin();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const { checkAuth } = useAuth();
-    // 3. const navigate = useNavigate(); silindi
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -19,7 +16,6 @@ export default function Login({ setActivePage }) {
             const res = await handleLogin({ "Name": username, "Password": password });
             if (res) {
                 await checkAuth();
-                // 4. Yönlendirme artık state üzerinden yapılıyor
                 setActivePage("dashboard"); 
             }
         } catch (err) {

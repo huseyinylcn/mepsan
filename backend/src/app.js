@@ -7,7 +7,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }))
 
 
 const allowedOrigins = [
-  'http://localhost:3002', 
+  'http://localhost:3000', 
   'https://49f3-78-188-72-174.ngrok-free.app' 
 ];
 

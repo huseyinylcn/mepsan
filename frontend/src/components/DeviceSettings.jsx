@@ -2,7 +2,7 @@ import { Orbit, Save, Trash2, Cpu, Edit3, Terminal, Activity } from "lucide-reac
 import { useTables } from "./../hooks/dbTransactions";
 import { useEffect, useState } from 'react';
 
-export default function DeviceSettings({ setActivePage, targetId }) {
+export default function DeviceSettings({ setActivePage, targetId,targetSetId }) {
   const { triggerTableContent, loading2, triggerTableUpdate, loading3 } = useTables();
   const [PeriperalDevicesTypedef, setPeriperalDevicesTypedef] = useState([]);
 
@@ -85,7 +85,7 @@ export default function DeviceSettings({ setActivePage, targetId }) {
                 <div className="flex items-center gap-3 ml-4">
                   <button
                     type="button"
-                    onClick={() => setActivePage("dotSettings")} 
+                    onClick={() =>{ setActivePage("dotSettings"); targetSetId(item.ID)}} 
                     className="flex items-center gap-2 px-4 py-2.5 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 rounded-xl text-[11px] font-black uppercase tracking-wider transition-all active:scale-95 border border-indigo-500/20"
                   >
                     <Orbit size={16} className="text-indigo-500" />
@@ -94,7 +94,7 @@ export default function DeviceSettings({ setActivePage, targetId }) {
 
                   <button
                     type="button"
-                    onClick={() =>{ setActivePage("logSettings");}} 
+                    onClick={() =>{ setActivePage("logSettings"); targetSetId(item.ID)}} 
                     className="flex items-center gap-2 px-4 py-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-xl text-[11px] font-black uppercase tracking-wider transition-all active:scale-95 border border-emerald-500/20"
                   >
                     <Terminal size={16} />

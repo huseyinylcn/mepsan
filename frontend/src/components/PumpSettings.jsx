@@ -2,7 +2,7 @@ import { Save, Network, Trash2, Settings2, Activity, Cog, ChevronDown, Lock, Fue
 import { useTables } from "./../hooks/dbTransactions";
 import { useEffect, useState } from 'react';
 
-export default function PumpSettings({ setActivePage, targetId }) {
+export default function PumpSettings({ setActivePage, targetSetId }) {
   const { triggerTableContent, triggerTableUpdate, loading3 } = useTables();
   const [DispenserConfig, setDispenserConfig] = useState([]);
   const [PeriperalDevicesTypedef, setPeriperalDevicesTypedef] = useState([]);
@@ -78,7 +78,7 @@ export default function PumpSettings({ setActivePage, targetId }) {
                   <div className="flex justify-between items-end px-1 mb-0.5">
                     <label className="text-[11px] font-black text-slate-400 uppercase tracking-wider">Device</label>
                     <button
-                      onClick={() => { setActivePage("deviceSettings"); targetId(item.DeviceID) }}
+                      onClick={() => { setActivePage("deviceSettings"); targetSetId(item.DeviceID) }}
                       className="flex items-center gap-1.5 px-2 py-1 bg-slate-800 border border-slate-700 text-blue-400 rounded-lg hover:bg-slate-700 transition-all active:scale-95 group/btn"
                     >
                       <span className="text-[10px] font-bold uppercase">Detail</span>
@@ -96,7 +96,7 @@ export default function PumpSettings({ setActivePage, targetId }) {
                   <div className="flex justify-between items-end px-1 mb-0.5">
                     <label className="text-[11px] font-black text-slate-400 uppercase tracking-wider">Protocol</label>
                     <button
-                      onClick={() =>{ setActivePage("pumpProtocol"); targetId(item.Protocol)}}
+                      onClick={() =>{ setActivePage("pumpProtocol"); targetSetId(item.Protocol)}}
                       className="flex items-center gap-1.5 px-2 py-1 bg-slate-800 border border-slate-700 text-blue-400 rounded-lg hover:bg-slate-700 transition-all"
                     >
                       <span className="text-[10px] font-bold uppercase">Detail</span>
@@ -121,7 +121,7 @@ export default function PumpSettings({ setActivePage, targetId }) {
                   <div className="flex justify-between items-end px-1 mb-0.5">
                     <label className="text-[11px] font-black text-slate-400 uppercase tracking-wider">SCP</label>
                     <button
-                      onClick={() =>{ setActivePage("portSettings"); targetId(item.SCPNo)}}
+                      onClick={() =>{ setActivePage("portSettings"); targetSetId(item.SCPNo)}}
                       className="flex items-center gap-1.5 px-2 py-1 bg-slate-800 border border-slate-700 text-blue-400 rounded-lg hover:bg-slate-700 transition-all"
                     >
                       <span className="text-[10px] font-bold uppercase">Detail</span>
@@ -163,7 +163,7 @@ export default function PumpSettings({ setActivePage, targetId }) {
                 {/* Nozzle Button */}
                 <div className="flex flex-col justify-end">
                   <button
-                    onClick={() => setActivePage("dispenserNozzle", item.ID)}
+                    onClick={() => {setActivePage("dispenserNozzle"); targetSetId(item.ID)}}
                     className="flex items-center justify-center gap-2 h-[46px] bg-blue-600 hover:bg-blue-500 text-white rounded-xl shadow-lg shadow-blue-900/20 transition-all active:scale-95 group/btn"
                   >
                     <Fuel size={18} className="group-hover/btn:animate-pulse" />
